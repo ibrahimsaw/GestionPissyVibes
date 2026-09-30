@@ -26,7 +26,8 @@ services:
     environment:
       - DEBUG=False
       - SECRET_KEY=pissy-vibes-prod-secret-key-burkina-faso-2026
-      - ALLOWED_HOSTS=localhost,127.0.0.1,pissyvibes.org,www.pissyvibes.org
+      - ALLOWED_HOSTS=*
+      - CSRF_TRUSTED_ORIGINS=https://pissyvibes.regies.tech,https://www.pissyvibes.regies.tech,http://187.124.54.132:8095
       - DATABASE_URL=postgres://pissy_user:pissy_password_2026@db:5432/pissy_vibes_db
       - DJANGO_SETTINGS_MODULE=config.settings.production
     volumes:
