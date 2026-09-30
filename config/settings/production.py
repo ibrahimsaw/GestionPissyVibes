@@ -13,13 +13,16 @@ USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 
 # CSRF Trusted Origins
-csrf_env = os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://*.regies.tech,https://pissyvibes.regies.tech,https://www.pissyvibes.regies.tech,http://187.124.54.132:8095')
+csrf_env = os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://pissyvibes.regies.tech,http://pissyvibes.regies.tech,https://*.regies.tech,http://*.regies.tech')
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in csrf_env.split(',') if o.strip()]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+CSRF_USE_SESSIONS = False
+
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
