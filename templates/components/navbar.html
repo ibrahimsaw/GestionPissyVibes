@@ -1,7 +1,7 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-pissy sticky-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'core:home' %}">
-            {% load static %}
             {% if site_settings and site_settings.logo %}
                 <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" height="44" class="rounded-2">
             {% else %}

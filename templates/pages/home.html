@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
@@ -58,13 +58,13 @@
             </div>
             <div class="col-6 col-md-4 col-lg">
                 <div class="stat-item">
-                    <div class="stat-number" data-target="{{ site_settings.stat_volunteers_count }}">0</div>
+                    <div class="stat-number" data-target="+{{ site_settings.stat_volunteers_count }}">0</div>
                     <div class="stat-label">Jeunes mobilisés</div>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg">
                 <div class="stat-item">
-                    <div class="stat-number text-success" data-target="{{ site_settings.stat_trees_planted }}">0</div>
+                    <div class="stat-number text-success" data-target="+{{ site_settings.stat_trees_planted }}">0</div>
                     <div class="stat-label">Arbres plantés</div>
                 </div>
             </div>
