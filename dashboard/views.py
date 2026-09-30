@@ -1,4 +1,4 @@
-﻿import csv
+import csv
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -274,12 +274,13 @@ def photo_delete_view(request, pk):
 
 @staff_required
 def video_create_view(request):
-    form = GalleryVideoForm(request.POST or None)
+    form = GalleryVideoForm(request.POST or None, request.FILES or None)
     if request.method == 'POST' and form.is_valid():
         form.save()
         messages.success(request, "La vidéo a été ajoutée !")
         return redirect('dashboard:gallery_manage')
     return render(request, 'dashboard/gallery/video_form.html', {'form': form, 'title': "Ajouter une Vidéo", 'active_menu': 'gallery'})
+
 
 @staff_required
 def video_delete_view(request, pk):

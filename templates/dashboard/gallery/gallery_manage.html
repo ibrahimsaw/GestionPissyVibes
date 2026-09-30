@@ -6,7 +6,7 @@
 <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
     <div>
         <h1 class="h3 font-heading text-dark mb-1">Galerie Photos & Vidéos</h1>
-        <p class="text-muted small mb-0">Ajoutez des photos aux albums et intégrez des vidéos YouTube.</p>
+        <p class="text-muted small mb-0">Ajoutez des photos aux albums et intégrez des vidéos (locales ou YouTube).</p>
     </div>
     <div class="d-flex gap-2">
         <a href="{% url 'dashboard:photo_create' %}" class="btn btn-success shadow-sm">
@@ -44,23 +44,37 @@
     </div>
 </div>
 
-<!-- Vidéos -->
+<!-- Vidéos (Locales et YouTube) -->
 <div class="card border-0 shadow-sm rounded-4 bg-white">
     <div class="card-header bg-transparent border-0 p-4 pb-2">
-        <h4 class="h5 font-heading text-dark mb-0">Vidéos</h4>
+        <h4 class="h5 font-heading text-dark mb-0">Vidéos (Fichiers locaux et liens externes)</h4>
     </div>
     <div class="card-body p-4 pt-2">
         <div class="row g-4">
             {% for video in videos %}
                 <div class="col-md-6 col-lg-4">
                     <div class="card border rounded-3 overflow-hidden h-100">
-                        <div class="ratio ratio-16x9">
-                            <iframe src="{{ video.get_embed_url }}" title="{{ video.title }}" allowfullscreen></iframe>
+                        <div class="ratio ratio-16x9 bg-black">
+                            {% if video.video_file %}
+                                <video controls class="w-100 h-100" {% if video.thumbnail %}poster="{{ video.thumbnail.url }}"{% endif %}>
+                                    <source src="{{ video.video_file.url }}" type="video/mp4">
+                                    Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+                                </video>
+                            {% elif video.video_url %}
+                                <iframe src="{{ video.get_embed_url }}" title="{{ video.title }}" allowfullscreen></iframe>
+                            {% endif %}
                         </div>
                         <div class="p-3 d-flex justify-content-between align-items-center">
                             <div>
                                 <h6 class="font-heading mb-0 text-dark">{{ video.title }}</h6>
-                                <small class="text-muted">{{ video.date|date:"d/m/Y" }}</small>
+                                <small class="text-muted">
+                                    {% if video.video_file %}
+                                        <span class="badge bg-success-subtle text-success border border-success me-1">Fichier local</span>
+                                    {% else %}
+                                        <span class="badge bg-danger-subtle text-danger border border-danger me-1">En ligne</span>
+                                    {% endif %}
+                                    {{ video.date|date:"d/m/Y" }}
+                                </small>
                             </div>
                             <form method="POST" action="{% url 'dashboard:video_delete' video.pk %}" onsubmit="return confirm('Supprimer cette vidéo ?');">
                                 {% csrf_token %}

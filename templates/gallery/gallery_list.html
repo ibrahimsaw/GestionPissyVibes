@@ -39,8 +39,15 @@
                 {% for video in videos %}
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 bg-white">
-                            <div class="ratio ratio-16x9">
-                                <iframe src="{{ video.get_embed_url }}" title="{{ video.title }}" allowfullscreen></iframe>
+                            <div class="ratio ratio-16x9 bg-black">
+                                {% if video.video_file %}
+                                    <video controls class="w-100 h-100" {% if video.thumbnail %}poster="{{ video.thumbnail.url }}"{% endif %}>
+                                        <source src="{{ video.video_file.url }}" type="video/mp4">
+                                        Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+                                    </video>
+                                {% elif video.video_url %}
+                                    <iframe src="{{ video.get_embed_url }}" title="{{ video.title }}" allowfullscreen></iframe>
+                                {% endif %}
                             </div>
                             <div class="p-3">
                                 <h5 class="font-heading mb-1">{{ video.title }}</h5>

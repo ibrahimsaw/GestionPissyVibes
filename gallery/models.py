@@ -1,4 +1,4 @@
-﻿import re
+import re
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -47,7 +47,8 @@ class GalleryPhoto(models.Model):
 
 class GalleryVideo(models.Model):
     title = models.CharField("Titre de la vidéo", max_length=200)
-    video_url = models.URLField("Lien YouTube ou Vimeo", help_text="Ex: https://www.youtube.com/watch?v=XXXX ou https://vimeo.com/XXXX")
+    video_file = models.FileField("Fichier vidéo local (MP4, WebM...)", upload_to="gallery/videos_files/", blank=True, null=True, help_text="Téléversez un fichier vidéo local ou indiquez un lien YouTube/Vimeo ci-dessous.")
+    video_url = models.URLField("Lien YouTube ou Vimeo", blank=True, help_text="Ex: https://www.youtube.com/watch?v=XXXX ou https://vimeo.com/XXXX")
     thumbnail = models.ImageField("Miniature personnalisée", upload_to="gallery/videos/", blank=True, null=True)
     description = models.TextField("Description", blank=True)
     date = models.DateField("Date de publication", blank=True, null=True)
@@ -62,7 +63,13 @@ class GalleryVideo(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def is_local(self):
+        return bool(self.video_file)
+
     def get_embed_url(self):
+        if not self.video_url:
+            return ""
         # Parse YouTube
         youtube_match = re.search(r'(?:v=|\/|embed\/|youtu\.be\/)([a-zA-Z0-9_-]{11})', self.video_url)
         if youtube_match:
@@ -72,3 +79,4 @@ class GalleryVideo(models.Model):
         if vimeo_match:
             return f"https://player.vimeo.com/video/{vimeo_match.group(1)}"
         return self.video_url
+

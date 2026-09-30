@@ -1,4 +1,4 @@
-{% extends 'dashboard/base_dashboard.html' %}
+﻿{% extends 'dashboard/base_dashboard.html' %}
 
 {% block title %}{{ title }} - Espace Gestion{% endblock %}
 
@@ -12,29 +12,51 @@
 
 <div class="card border-0 shadow-sm rounded-4 bg-white">
     <div class="card-body p-4 p-lg-5">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row g-4">
                 <div class="col-12">
                     <label class="form-label fw-bold small">Titre de la vidéo *</label>
                     {{ form.title }}
                 </div>
-                <div class="col-12">
-                    <label class="form-label fw-bold small">Lien YouTube ou Vimeo *</label>
-                    {{ form.video_url }}
+
+                <div class="col-md-6">
+                    <div class="p-3 border rounded-3 bg-light h-100">
+                        <label class="form-label fw-bold small text-success"><i class="bi bi-file-earmark-play-fill me-1"></i> Option A : Téléverser un fichier vidéo local (MP4, WebM)</label>
+                        {{ form.video_file }}
+                        <small class="text-muted d-block mt-2">Recommandé pour les courtes vidéos ou reels de l'association stockés sur le serveur.</small>
+                    </div>
                 </div>
-                <div class="col-12">
-                    <label class="form-label fw-bold small">Description</label>
-                    {{ form.description }}
+
+                <div class="col-md-6">
+                    <div class="p-3 border rounded-3 bg-light h-100">
+                        <label class="form-label fw-bold small text-danger"><i class="bi bi-youtube me-1"></i> Option B : Lien YouTube ou Vimeo</label>
+                        {{ form.video_url }}
+                        <small class="text-muted d-block mt-2">Collez simplement l'URL de la vidéo YouTube ou Vimeo.</small>
+                    </div>
                 </div>
-                <div class="col-12">
-                    <div class="form-check form-switch">
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Image miniature (Affiche avant lecture)</label>
+                    {{ form.thumbnail }}
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-check form-switch mt-4">
                         {{ form.featured }}
                         <label class="form-check-label fw-bold small ms-2">Mettre en avant sur la page d'accueil</label>
                     </div>
                 </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Description</label>
+                    {{ form.description }}
+                </div>
+
                 <div class="col-12 pt-3 border-top d-flex gap-2">
-                    <button type="submit" class="btn btn-success btn-lg fw-bold px-4">Ajouter la vidéo</button>
+                    <button type="submit" class="btn btn-success btn-lg fw-bold px-4">
+                        <i class="bi bi-check-circle-fill me-1"></i> Enregistrer la vidéo
+                    </button>
                     <a href="{% url 'dashboard:gallery_manage' %}" class="btn btn-light btn-lg">Annuler</a>
                 </div>
             </div>

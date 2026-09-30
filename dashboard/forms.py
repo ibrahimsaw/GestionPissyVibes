@@ -1,4 +1,4 @@
-﻿from django import forms
+from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from core.models import SiteSettings
 from activities.models import Action
@@ -99,13 +99,16 @@ class GalleryPhotoForm(forms.ModelForm):
 class GalleryVideoForm(forms.ModelForm):
     class Meta:
         model = GalleryVideo
-        fields = ['title', 'video_url', 'description', 'featured']
+        fields = ['title', 'video_file', 'video_url', 'thumbnail', 'description', 'featured']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Titre de la vidéo"}),
-            'video_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': "https://www.youtube.com/watch?v=..."}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'video_file': forms.FileInput(attrs={'class': 'form-control'}),
+            'video_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': "https://www.youtube.com/watch?v=... (Optionnel si vous téléversez un fichier)"}),
+            'thumbnail': forms.FileInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': "Description de la vidéo..."}),
             'featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
 
 class SiteSettingsForm(forms.ModelForm):
     class Meta:

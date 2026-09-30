@@ -24,8 +24,8 @@
     --pv-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --pv-font-heading: 'Outfit', system-ui, -apple-system, sans-serif;
     
-    --pv-radius: 12px;
-    --pv-radius-lg: 20px;
+    --pv-radius: 8px;
+    --pv-radius-lg: 8px;
     --pv-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
     --pv-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
     --pv-shadow-hover: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
@@ -46,6 +46,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     color: var(--pv-dark);
     font-weight: 700;
     letter-spacing: -0.02em;
+}
+
+.rounded-4 {
+    border-radius: var(--pv-radius) !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -90,7 +94,9 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     color: var(--pv-white);
     font-weight: 600;
     border-radius: var(--pv-radius);
+    /*
     padding: 0.7rem 1.4rem;
+    */
     border: none;
     transition: var(--pv-transition);
     box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
@@ -107,7 +113,9 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     color: var(--pv-dark);
     font-weight: 600;
     border-radius: var(--pv-radius);
+    /*
     padding: 0.7rem 1.4rem;
+    */
     border: none;
     transition: var(--pv-transition);
 }
@@ -123,7 +131,9 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     background: transparent;
     font-weight: 600;
     border-radius: var(--pv-radius);
+    /*
     padding: 0.65rem 1.35rem;
+    */
     transition: var(--pv-transition);
 }
 .btn-pv-outline:hover {
@@ -138,7 +148,9 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     background: transparent;
     font-weight: 600;
     border-radius: var(--pv-radius);
+    /*
     padding: 0.65rem 1.35rem;
+    */
     transition: var(--pv-transition);
 }
 .btn-pv-outline-light:hover {
