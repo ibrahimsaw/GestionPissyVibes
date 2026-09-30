@@ -1,4 +1,4 @@
-﻿import datetime
+import datetime
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.contrib.auth import get_user_model
@@ -38,15 +38,15 @@ class Command(BaseCommand):
         # 2. SiteSettings
         settings_obj = SiteSettings.load()
         settings_obj.site_name = "Pissy Vibes"
-        settings_obj.tagline = "Ensemble, on bouge, on nettoie et on fête."
-        settings_obj.vision = "Contribuer à faire du Burkina Faso un pays plus propre et plus engagé, en plaçant l’art et la jeunesse au service de la révolution environnementale."
-        settings_obj.about_summary = "Pissy Vibes est une association de jeunes engagés dans la promotion de l’assainissement, de l’environnement, de la culture et de la mobilisation citoyenne au Burkina Faso."
-        settings_obj.about_full_history = "Née de l'énergie et de la volonté des jeunes du quartier de Pissy à Ouagadougou, Pissy Vibes s'est donné pour mission de transformer l'engagement civique et écologique en une aventure festive, inclusive et profondément humaine. À travers des opérations 'Ville Propre', des plantations d'arbres, des ateliers artistiques et des tournois sportifs, nous fédérons toutes les énergies pour des villes durables."
-        settings_obj.mission = "Mobiliser, sensibiliser et outiller la jeunesse burkinabè pour agir concrètement en faveur de l'écologie urbaine, de l'assainissement durable et de l'épanouissement communautaire."
+        settings_obj.tagline = "L'Énergie Positive au Service de l'Assainissement, de la Culture et du Sport"
+        settings_obj.vision = "Impulser le Développement Communautaire et Social au sein de l'arrondissement N°06 de Ouagadougou, en mobilisant les citoyens pour améliorer collectivement le cadre de vie, la salubrité et l'épanouissement de la jeunesse."
+        settings_obj.about_summary = "Pissy Vibes est une association laïque, apolitique et à but non lucratif régie par la loi n° 011-2025/ALT du 17 juillet 2025 au Burkina Faso. Née à Pissy, elle allie l'ambiance et la vibration positive (Vibes) à l'engagement civique concret."
+        settings_obj.about_full_history = "Créée conformément à la loi n° 011-2025/ALT et adoptée en Assemblée Générale constitutive le 04 octobre 2025, l'Association PISSY VIBES tire son nom du quartier de Pissy à Ouagadougou et du mot 'Vibes' (vibration, ambiance positive). L'association structure l'engagement citoyen autour d'une thématique principale : l'Assainissement (campagnes de salubrité, gestion des déchets, hygiène publique), et de deux thématiques secondaires : le Sport et la Jeunesse (tournois, dépassement de soi) ainsi que la Culture et l'Épanouissement (patrimoine, événements artistiques)."
+        settings_obj.mission = "Mobiliser les citoyens de l'arrondissement N°06 de Ouagadougou pour transformer le cadre de vie par des actions de salubrité publique, encourager la pratique sportive et valoriser les expressions artistiques et culturelles locales."
         settings_obj.email = "contact@pissyvibes.org"
         settings_obj.phone = "+226 70 12 34 56"
         settings_obj.whatsapp = "+226 70 12 34 56"
-        settings_obj.address = "Secteur 17 (Pissy), Arrondissement 3, Ouagadougou, Burkina Faso"
+        settings_obj.address = "Pissy, Secteur 26, Arrondissement N°06, Province du Kadiogo, Ouagadougou, Burkina Faso"
         settings_obj.opening_hours = "Du Lundi au Samedi : 08h00 - 18h00"
         settings_obj.facebook_url = "https://facebook.com"
         settings_obj.instagram_url = "https://instagram.com"
@@ -61,14 +61,14 @@ class Command(BaseCommand):
         settings_obj.stat_events_count = 34
         settings_obj.save()
 
-        # 3. Domaines d'action
+        # 3. Domaines d'action (Alignés sur les Statuts Officiels)
         domains_data = [
-            ("Assainissement", "assainissement", "bi-trash-fill", "Nettoyage intensif des caniveaux, ramassage des déchets plastiques et sensibilisation de proximité.", 1),
-            ("Environnement", "environnement", "bi-tree-fill", "Reboisement urbain, création d'espaces verts communautaires et lutte contre la désertification.", 2),
-            ("Culture & Art", "culture", "bi-palette-fill", "Création de fresques murales écologiques, musique, recycl'art et concerts éco-citoyens.", 3),
-            ("Sport & Cohésion", "sport", "bi-trophy-fill", "Organisation de marathons de salubrité et de tournois de football unissant la jeunesse.", 4),
-            ("Citoyenneté", "citoyennete", "bi-people-fill", "Éducation civique, plaidoyer pour la salubrité publique et gouvernance locale participative.", 5),
-            ("Événements", "evenements", "bi-calendar-event-fill", "Festivals éco-urbains, barbecues solidaires et célébrations des victoires communautaires.", 6),
+            ("Assainissement (Thématique Principale)", "assainissement", "bi-trash-fill", "Campagnes de sensibilisation, nettoyage des rues et caniveaux, gestion des déchets et hygiène publique.", 1),
+            ("Sport & Jeunesse", "sport-jeunesse", "bi-trophy-fill", "Pratique sportive, tournois de maracana, détection et soutien des jeunes talents, fair-play.", 2),
+            ("Culture & Épanouissement", "culture-epanouissement", "bi-palette-fill", "Valorisation du patrimoine culturel, activités artistiques, concerts et événements d'expression créative.", 3),
+            ("Environnement & Cadre de Vie", "environnement", "bi-tree-fill", "Reboisement urbain, plantation d'arbres et aménagement d'espaces verts communautaires.", 4),
+            ("Engagement Citoyen", "engagement-citoyen", "bi-people-fill", "Mobilisation communautaire et participation active des résidents de l'Arrondissement N°06.", 5),
+            ("Événements Communautaires", "evenements-communautaires", "bi-calendar-event-fill", "Rencontres inter-quartiers, journées citoyennes et festivités éco-responsables.", 6),
         ]
         for name, slug, icon, desc, order in domains_data:
             DomainOfAction.objects.update_or_create(
@@ -261,12 +261,12 @@ class Command(BaseCommand):
         for art in articles_data:
             Article.objects.update_or_create(slug=art['slug'], defaults=art)
 
-        # 9. Membres
+        # 9. Membres du Bureau Exécutif (Conformes aux Statuts)
         members_data = [
-            ("Ibrahim", "OUEDRAOGO", "Président de l'association", "Passionné d'écologie urbaine et leader communautaire à Pissy.", 1),
-            ("Aminata", "SAWADOGO", "Secrétaire Générale", "Coordinatrice des projets et spécialiste en médiation sociale.", 2),
-            ("Cheick", "KABORE", "Responsable Opérations Salubrité", "Sur le terrain à chaque sortie pour organiser la logistique et l'équipement.", 3),
-            ("Fatou", "TRAORE", "Chargée de Communication & Médias", "Artiste et communicante, elle donne vie aux récits de Pissy Vibes sur le web.", 4),
+            ("Abdoul Bassit", "NEYA", "Président de l'Association", "Président du Bureau Exécutif, garant des orientations stratégiques et de la représentation civile.", 1),
+            ("Lanséré Abdine", "TERA", "Secrétaire Général", "Coordination administrative, rapports moraux et organisation des assemblées.", 2),
+            ("Bureau Exécutif", "PISSY VIBES", "Commission Assainissement & Salubrité", "Pilotage opérationnel des campagnes de nettoyage et gestion des déchets dans l'arrondissement N°06.", 3),
+            ("Cellule Jeunesse & Sport", "PISSY VIBES", "Commission Sport & Culture", "Organisation des tournois de maracana, événements artistiques et promotion des talents.", 4),
         ]
         for fn, ln, role, bio, ord_num in members_data:
             Member.objects.update_or_create(
