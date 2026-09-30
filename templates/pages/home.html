@@ -1,0 +1,399 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- 1. HERO SECTION -->
+<section class="hero-section">
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center g-5 py-lg-4">
+            <div class="col-lg-7 text-center text-lg-start">
+                <div class="hero-badge mb-3">
+                    <i class="bi bi-tree-fill"></i> Mouvement Jeunesse & Salubrité
+                </div>
+                <h1 class="hero-title mb-3 text-uppercase">
+                    {{ site_settings.tagline|default:"Ensemble, on bouge, on nettoie et on fête." }}
+                </h1>
+                <p class="lead text-light mb-4 opacity-90 fs-5">
+                    {{ site_settings.vision|default:"Une jeunesse engagée pour un Burkina Faso plus propre, plus vert et plus dynamique, en plaçant l'art et l'énergie communautaire au cœur de l'action." }}
+                </p>
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+                    <a href="{% url 'activities:action_list' %}" class="btn btn-lg btn-pv-secondary shadow">
+                        <i class="bi bi-compass-fill me-1"></i> Découvrir nos actions
+                    </a>
+                    <a href="{% url 'volunteers:join_view' %}" class="btn btn-lg btn-pv-outline-light">
+                        <i class="bi bi-person-plus-fill me-1"></i> Rejoindre Pissy Vibes
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="position-relative">
+                    <div class="rounded-4 overflow-hidden shadow-lg border border-3 border-white border-opacity-25" style="transform: rotate(2deg);">
+                        {% if site_settings.hero_image %}
+                            <img src="{{ site_settings.hero_image.url }}" alt="Action Pissy Vibes" class="img-fluid w-100 object-fit-cover" style="height: 380px;">
+                        {% else %}
+                            <div class="bg-dark text-white d-flex align-items-center justify-content-center p-5 text-center" style="height: 380px;">
+                                <div>
+                                    <i class="bi bi-people-fill text-warning display-1"></i>
+                                    <h4 class="mt-3 font-heading">Jeunesse en action</h4>
+                                    <p class="small text-white-50">Ouagadougou, Burkina Faso</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. SECTION STATISTIQUES (ANIMATED) -->
+<section class="container">
+    <div class="stats-container">
+        <div class="row g-4 justify-content-center divide-y divide-lg-0">
+            <div class="col-6 col-md-4 col-lg">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="{{ site_settings.stat_actions_count }}">0</div>
+                    <div class="stat-label">Actions réalisées</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="{{ site_settings.stat_volunteers_count }}">0</div>
+                    <div class="stat-label">Jeunes mobilisés</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <div class="stat-item">
+                    <div class="stat-number text-success" data-target="{{ site_settings.stat_trees_planted }}">0</div>
+                    <div class="stat-label">Arbres plantés</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <div class="stat-item">
+                    <div class="stat-number text-warning" data-target="{{ site_settings.stat_neighborhoods_count }}">0</div>
+                    <div class="stat-label">Quartiers touchés</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <div class="stat-item">
+                    <div class="stat-number text-danger" data-target="{{ site_settings.stat_events_count }}">0</div>
+                    <div class="stat-label">Événements organisés</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. QUI SOMMES-NOUS ? -->
+<section class="py-5 my-4">
+    <div class="container py-lg-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 order-2 order-lg-1">
+                <div class="position-relative">
+                    <div class="bg-success rounded-4 p-2 shadow" style="max-width: 520px; margin: 0 auto;">
+                        <div class="rounded-4 overflow-hidden bg-white p-3">
+                            <h4 class="font-heading text-dark mb-3"><i class="bi bi-stars text-warning me-2"></i> L'esprit Pissy Vibes</h4>
+                            <p class="text-muted mb-3">
+                                {{ site_settings.about_summary }}
+                            </p>
+                            <div class="d-flex align-items-center gap-3 bg-light p-3 rounded-3">
+                                <i class="bi bi-geo-alt-fill text-danger fs-3"></i>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Ancrage Local & National</h6>
+                                    <small class="text-muted">{{ site_settings.address|default:"Pissy, Ouagadougou, Burkina Faso" }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2">
+                <div class="section-header text-start mb-4">
+                    <span class="section-subtitle">À propos de l'association</span>
+                    <h2 class="section-title">Une jeunesse unie pour un environnement sain</h2>
+                </div>
+                <p class="text-muted mb-4 lead">
+                    {{ site_settings.about_full_history|truncatewords:45 }}
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{% url 'core:about' %}" class="btn btn-pv-primary">
+                        En savoir plus sur nous <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                    <a href="{% url 'contact:contact_view' %}" class="btn btn-pv-outline">
+                        Nous contacter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4. DOMAINES D'ACTION -->
+<section class="py-5 bg-white border-top border-bottom">
+    <div class="container py-lg-4">
+        <div class="text-center section-header">
+            <span class="section-subtitle">Nos Piliers</span>
+            <h2 class="section-title">6 Domaines d'Action Clés</h2>
+            <p class="text-muted mx-auto" style="max-width: 600px;">
+                De l'assainissement concret des rues jusqu'à l'effervescence culturelle, découvrez comment nous agissons au quotidien.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            {% for domain in domains %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="domain-card">
+                        <div class="domain-icon-circle">
+                            <i class="bi {{ domain.icon }}"></i>
+                        </div>
+                        <h4 class="h5 font-heading mb-2">{{ domain.name }}</h4>
+                        <p class="text-muted small mb-0">{{ domain.short_description }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center text-muted py-4">
+                    <p>Domaines d'action en cours d'initialisation.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 5. ACTIONS RÉCENTES -->
+<section class="py-5">
+    <div class="container py-lg-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-4">
+            <div>
+                <span class="section-subtitle">Sur le terrain</span>
+                <h2 class="section-title mb-0">Nos Dernières Actions</h2>
+            </div>
+            <a href="{% url 'activities:action_list' %}" class="btn btn-pv-outline mt-3 mt-md-0">
+                Toutes les actions <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for action in recent_actions %}
+                <div class="col-md-6 col-lg-3">
+                    {% include 'components/action_card.html' with action=action %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <p>Aucune action enregistrée pour le moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 6. PROJET MIS EN AVANT -->
+{% if featured_project %}
+<section class="py-5 bg-light">
+    <div class="container py-lg-3">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+            <div class="row g-0 align-items-center">
+                <div class="col-lg-6">
+                    {% if featured_project.cover_image %}
+                        <img src="{{ featured_project.cover_image.url }}" alt="{{ featured_project.title }}" class="img-fluid w-100 object-fit-cover" style="min-height: 360px;">
+                    {% else %}
+                        <div class="bg-success text-white d-flex align-items-center justify-content-center p-5 h-100">
+                            <i class="bi bi-lightbulb fs-1"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6 p-4 p-lg-5">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge {{ featured_project.get_status_badge }}">{{ featured_project.get_status_display }}</span>
+                        <span class="text-muted small"><i class="bi bi-geo-alt-fill text-danger me-1"></i> {{ featured_project.location }}</span>
+                    </div>
+                    <span class="text-uppercase text-success fw-bold small">Projet Phare</span>
+                    <h3 class="font-heading mb-3 mt-1">{{ featured_project.title }}</h3>
+                    <p class="text-muted mb-4">
+                        {{ featured_project.summary }}
+                    </p>
+                    <a href="{{ featured_project.get_absolute_url }}" class="btn btn-pv-primary">
+                        Découvrir les détails du projet <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- 7. PROCHAINS ÉVÉNEMENTS -->
+<section class="py-5">
+    <div class="container py-lg-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-4">
+            <div>
+                <span class="section-subtitle">Agenda citoyen</span>
+                <h2 class="section-title mb-0">Prochains Événements</h2>
+            </div>
+            <a href="{% url 'events:event_list' %}" class="btn btn-pv-outline mt-3 mt-md-0">
+                Tout l'agenda <i class="bi bi-calendar-event ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for event in upcoming_events %}
+                <div class="col-md-6 col-lg-4">
+                    {% include 'components/event_card.html' with event=event %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-4 text-muted">
+                    <p>Aucun événement planifié pour le moment. Restez connectés !</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 8. GALERIE PHOTOS -->
+<section class="py-5 bg-white border-top border-bottom">
+    <div class="container py-lg-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-4">
+            <div>
+                <span class="section-subtitle">Moments forts</span>
+                <h2 class="section-title mb-0">La Galerie en Images</h2>
+            </div>
+            <a href="{% url 'gallery:gallery_list' %}" class="btn btn-pv-outline mt-3 mt-md-0">
+                Voir toute la galerie <i class="bi bi-images ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-3">
+            {% for photo in featured_photos %}
+                <div class="col-6 col-md-4 col-lg-2">
+                    <a href="#" class="d-block rounded-3 overflow-hidden shadow-sm ratio ratio-1x1 position-relative group" data-pv-lightbox data-img-src="{{ photo.image.url }}" data-caption="{{ photo.title|default:photo.caption }}">
+                        <img src="{{ photo.image.url }}" alt="{{ photo.alt_text }}" class="object-fit-cover w-100 h-100" loading="lazy">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-40 opacity-0 hover-opacity-100 text-white transition">
+                            <i class="bi bi-zoom-in fs-4"></i>
+                        </div>
+                    </a>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-4 text-muted">
+                    <p>La galerie sera bientôt alimentée avec les photos de nos actions.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 9. ACTUALITÉS / BLOG -->
+<section class="py-5">
+    <div class="container py-lg-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between mb-4">
+            <div>
+                <span class="section-subtitle">Restez informés</span>
+                <h2 class="section-title mb-0">Dernières Actualités</h2>
+            </div>
+            <a href="{% url 'news:article_list' %}" class="btn btn-pv-outline mt-3 mt-md-0">
+                Tous les articles <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for article in latest_articles %}
+                <div class="col-md-6 col-lg-4">
+                    {% include 'components/article_card.html' with article=article %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-4 text-muted">
+                    <p>Pas d'actualité récente pour l'instant.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 10. TÉMOIGNAGES -->
+{% if testimonials %}
+<section class="py-5 bg-light">
+    <div class="container py-lg-4">
+        <div class="text-center section-header">
+            <span class="section-subtitle">Ce qu'ils disent de nous</span>
+            <h2 class="section-title">Témoignages & Échos du Terrain</h2>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            {% for item in testimonials|slice:":3" %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+                        <div class="text-warning mb-3">
+                            {% for i in "12345"|make_list %}
+                                <i class="bi bi-star-fill"></i>
+                            {% endfor %}
+                        </div>
+                        <p class="text-muted italic mb-4 flex-grow-1">
+                            « {{ item.content }} »
+                        </p>
+                        <div class="d-flex align-items-center gap-3 pt-3 border-top">
+                            {% if item.photo %}
+                                <img src="{{ item.photo.url }}" alt="{{ item.name }}" class="rounded-circle object-fit-cover" width="48" height="48">
+                            {% else %}
+                                <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold" style="width: 48px; height: 48px;">
+                                    {{ item.name|slice:":1" }}
+                                </div>
+                            {% endif %}
+                            <div>
+                                <h6 class="mb-0 fw-bold">{{ item.name }}</h6>
+                                <small class="text-muted">{{ item.role }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- 11. PARTENAIRES -->
+{% if partners %}
+<section class="py-5 bg-white border-top">
+    <div class="container text-center">
+        <span class="section-subtitle">Ils nous font confiance</span>
+        <h3 class="h4 font-heading mb-4">Nos Partenaires & Soutiens</h3>
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 gap-md-5">
+            {% for partner in partners %}
+                <div class="p-2">
+                    {% if partner.logo %}
+                        {% if partner.website %}
+                            <a href="{{ partner.website }}" target="_blank" rel="noopener noreferrer">
+                                <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid grayscale hover-color" style="max-height: 50px; max-width: 140px; object-fit: contain;">
+                            </a>
+                        {% else %}
+                            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid" style="max-height: 50px; max-width: 140px; object-fit: contain;">
+                        {% endif %}
+                    {% else %}
+                        <span class="badge bg-light text-dark p-2 border">{{ partner.name }}</span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- 12. CTA REJOINDRE PISSY VIBES -->
+<section class="py-5">
+    <div class="container">
+        <div class="cta-banner text-center text-lg-start">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <h2 class="display-6 font-heading text-white fw-bold mb-2">Tu veux agir concrètement avec nous ?</h2>
+                    <p class="lead text-light mb-0 opacity-90">
+                        Rejoins la communauté des jeunes engagés de Pissy et de tout le Burkina Faso. Donne de ton temps, tes idées et ton énergie !
+                    </p>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <a href="{% url 'volunteers:join_view' %}" class="btn btn-lg btn-pv-secondary px-4 py-3 shadow">
+                        <i class="bi bi-hand-thumbs-up-fill me-1"></i> Devenir Bénévole
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Nos Actions sur le terrain - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container py-lg-2">
+        <span class="badge bg-success text-uppercase px-3 py-2 mb-2">Impact Direct</span>
+        <h1 class="display-5 font-heading fw-bold mb-2">Nos Actions Citoyennes</h1>
+        <p class="lead text-white-50 mx-auto mb-0" style="max-width: 650px;">
+            Découvrez toutes les opérations de nettoyage, de reboisement et de mobilisation menées par nos équipes.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Filtres & Recherche -->
+        <div class="card border-0 shadow-sm rounded-4 p-3 mb-5 bg-white">
+            <form method="GET" class="row g-3 align-items-center">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" name="q" value="{{ search_query }}" class="form-control bg-light border-0" placeholder="Rechercher une action (mot-clé, quartier...)">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select name="category" class="form-select bg-light border-0">
+                        <option value="">Toutes les catégories</option>
+                        {% for code, label in category_choices %}
+                            <option value="{{ code }}" {% if selected_category == code %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="status" class="form-select bg-light border-0">
+                        <option value="">Tous les statuts</option>
+                        {% for code, label in status_choices %}
+                            <option value="{{ code }}" {% if selected_status == code %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-pv-primary">Filtrer</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Liste des actions -->
+        <div class="row g-4">
+            {% for action in actions %}
+                <div class="col-md-6 col-lg-4">
+                    {% include 'components/action_card.html' with action=action %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-inbox fs-1 text-muted"></i>
+                    <p class="text-muted mt-2">Aucune action ne correspond à vos critères de recherche.</p>
+                    <a href="{% url 'activities:action_list' %}" class="btn btn-sm btn-pv-outline">Réinitialiser les filtres</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% include 'components/pagination.html' with page_obj=actions %}
+    </div>
+</section>
+{% endblock %}

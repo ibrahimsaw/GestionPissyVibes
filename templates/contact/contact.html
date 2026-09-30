@@ -1,0 +1,103 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Contactez-nous - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container py-lg-2">
+        <span class="badge bg-success text-uppercase px-3 py-2 mb-2">Échange & Dialogue</span>
+        <h1 class="display-5 font-heading fw-bold mb-2">Contactez Pissy Vibes</h1>
+        <p class="lead text-white-50 mx-auto mb-0" style="max-width: 650px;">
+            Une question, une idée de partenariat ou un message d'encouragement ? Écrivez-nous directement.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm rounded-4 p-4 p-lg-5 bg-white h-100">
+                    <h3 class="font-heading mb-4">Nos Coordonnées</h3>
+                    
+                    <div class="d-flex flex-column gap-4 mb-5">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="bg-success-subtle text-success p-3 rounded-circle fs-4">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">Siège & Localisation</h6>
+                                <p class="text-muted small mb-0">{{ settings.address|default:"Pissy, Ouagadougou, Burkina Faso" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="bg-warning-subtle text-warning p-3 rounded-circle fs-4">
+                                <i class="bi bi-telephone-fill"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">Téléphone & WhatsApp</h6>
+                                <p class="text-muted small mb-0">{{ settings.phone }}</p>
+                                <p class="text-success small fw-bold mb-0">WhatsApp : {{ settings.whatsapp }}</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="bg-primary-subtle text-primary p-3 rounded-circle fs-4">
+                                <i class="bi bi-envelope-fill"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">Email Officiel</h6>
+                                <p class="text-muted small mb-0">{{ settings.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="h6 font-heading mb-3 text-uppercase text-muted">Réseaux Sociaux</h5>
+                    {% include 'components/social_links.html' %}
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm rounded-4 p-4 p-lg-5 bg-white">
+                    <h3 class="font-heading mb-2">Envoyez-nous un message</h3>
+                    <p class="text-muted small mb-4">Notre équipe vous répondra dans les meilleurs délais.</p>
+
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {{ form.website_hp }}
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small">Nom complet *</label>
+                                {{ form.name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small">Adresse email *</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small">Téléphone (facultatif)</label>
+                                {{ form.phone }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small">Objet du message *</label>
+                                {{ form.subject }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold small">Votre message *</label>
+                                {{ form.message }}
+                            </div>
+                            <div class="col-12 d-grid mt-4">
+                                <button type="submit" class="btn btn-pv-primary py-3 fw-bold">
+                                    <i class="bi bi-send-fill me-2"></i> Envoyer le message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

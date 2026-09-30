@@ -1,0 +1,58 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}{{ title }} - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="{% url 'dashboard:article_list' %}" class="text-decoration-none text-muted small">
+        <i class="bi bi-arrow-left me-1"></i> Retour aux articles
+    </a>
+    <h1 class="h3 font-heading text-dark mt-2 mb-0">{{ title }}</h1>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-body p-4 p-lg-5">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-4">
+                <div class="col-md-8">
+                    <label class="form-label fw-bold small">Titre de l'article *</label>
+                    {{ form.title }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Catégorie *</label>
+                    {{ form.category }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Image d'illustration / Couverture</label>
+                    {{ form.cover_image }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Extrait / Chapô (Affiché en introduction) *</label>
+                    {{ form.excerpt }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Contenu complet de l'article *</label>
+                    {{ form.content }}
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        {{ form.is_published }}
+                        <label class="form-check-label fw-bold small ms-2">Article publié (Visible par les visiteurs)</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        {{ form.featured }}
+                        <label class="form-check-label fw-bold small ms-2">Mettre en avant sur la page d'accueil</label>
+                    </div>
+                </div>
+                <div class="col-12 pt-3 border-top d-flex gap-2">
+                    <button type="submit" class="btn btn-success btn-lg fw-bold px-4">Enregistrer l'article</button>
+                    <a href="{% url 'dashboard:article_list' %}" class="btn btn-light btn-lg">Annuler</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

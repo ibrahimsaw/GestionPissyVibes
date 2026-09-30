@@ -1,0 +1,71 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white-50">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'news:article_list' %}" class="text-white-50">Actualités</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page">{{ article.title|truncatewords:5 }}</li>
+            </ol>
+        </nav>
+        {% if article.category %}
+            <span class="badge bg-success px-3 py-2 mb-2">{{ article.category.name }}</span>
+        {% endif %}
+        <h1 class="display-5 font-heading fw-bold">{{ article.title }}</h1>
+        <div class="d-flex flex-wrap gap-4 text-white-50 mt-3">
+            <span><i class="bi bi-person text-warning me-1"></i> {{ article.author_display_name }}</span>
+            <span><i class="bi bi-calendar3 text-info me-1"></i> {{ article.published_at|date:"l d F Y" }}</span>
+            <span><i class="bi bi-eye text-light me-1"></i> {{ article.views_count }} lectures</span>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                {% if article.cover_image %}
+                    <div class="rounded-4 overflow-hidden mb-4 shadow-sm">
+                        <img src="{{ article.cover_image.url }}" alt="{{ article.title }}" class="img-fluid w-100 object-fit-cover" style="max-height: 460px;">
+                    </div>
+                {% endif %}
+
+                <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm">
+                    <p class="lead text-dark fw-medium border-start border-4 border-success ps-3 mb-4">
+                        {{ article.excerpt }}
+                    </p>
+                    <div class="article-content text-muted lh-lg">
+                        {{ article.content|linebreaks }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                {% if related_articles %}
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+                        <h4 class="h5 font-heading mb-3">Articles similaires</h4>
+                        <div class="d-flex flex-column gap-3">
+                            {% for rel in related_articles %}
+                                <a href="{{ rel.get_absolute_url }}" class="text-decoration-none">
+                                    <h6 class="text-dark font-heading mb-1">{{ rel.title }}</h6>
+                                    <small class="text-muted"><i class="bi bi-calendar3 me-1"></i> {{ rel.published_at|date:"d/m/Y" }}</small>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-light">
+                    <h4 class="h5 font-heading mb-2">Suivez nos actualités</h4>
+                    <p class="small text-muted mb-3">Rejoignez-nous sur les réseaux sociaux pour être au cœur des activités de Pissy Vibes.</p>
+                    {% include 'components/social_links.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}{{ title }} - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="{% url 'dashboard:gallery_manage' %}" class="text-decoration-none text-muted small">
+        <i class="bi bi-arrow-left me-1"></i> Retour à la galerie
+    </a>
+    <h1 class="h3 font-heading text-dark mt-2 mb-0">{{ title }}</h1>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-body p-4 p-lg-5">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row g-4">
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Titre de la vidéo *</label>
+                    {{ form.title }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Lien YouTube ou Vimeo *</label>
+                    {{ form.video_url }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Description</label>
+                    {{ form.description }}
+                </div>
+                <div class="col-12">
+                    <div class="form-check form-switch">
+                        {{ form.featured }}
+                        <label class="form-check-label fw-bold small ms-2">Mettre en avant sur la page d'accueil</label>
+                    </div>
+                </div>
+                <div class="col-12 pt-3 border-top d-flex gap-2">
+                    <button type="submit" class="btn btn-success btn-lg fw-bold px-4">Ajouter la vidéo</button>
+                    <a href="{% url 'dashboard:gallery_manage' %}" class="btn btn-light btn-lg">Annuler</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

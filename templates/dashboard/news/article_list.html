@@ -1,0 +1,83 @@
+﻿{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Actualités & Blog - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+    <div>
+        <h1 class="h3 font-heading text-dark mb-1">Articles d'Actualité & Blog</h1>
+        <p class="text-muted small mb-0">Rédigez, publiez et gérez les récits et reportages de l'association.</p>
+    </div>
+    <a href="{% url 'dashboard:article_create' %}" class="btn btn-success shadow-sm">
+        <i class="bi bi-pencil-square me-1"></i> Rédiger un Article
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light small">
+                    <tr>
+                        <th>Titre</th>
+                        <th>Catégorie</th>
+                        <th>Auteur</th>
+                        <th>Date de publication</th>
+                        <th>Statut</th>
+                        <th>Vues</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in articles %}
+                        <tr>
+                            <td>
+                                <div class="fw-bold text-dark">{{ article.title }}</div>
+                                <small class="text-muted">{{ article.excerpt|truncatewords:8 }}</small>
+                            </td>
+                            <td><span class="badge bg-light text-dark border">{{ article.category.name|default:"Général" }}</span></td>
+                            <td class="small">{{ article.author_display_name }}</td>
+                            <td class="small">{{ article.published_at|date:"d/m/Y" }}</td>
+                            <td>
+                                {% if article.is_published %}
+                                    <span class="badge bg-success">Publié</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">Brouillon</span>
+                                {% endif %}
+                            </td>
+                            <td class="small fw-bold">{{ article.views_count }}</td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ article.get_absolute_url }}" target="_blank" class="btn btn-light" title="Voir"><i class="bi bi-eye"></i></a>
+                                    <a href="{% url 'dashboard:article_edit' article.pk %}" class="btn btn-light text-primary" title="Modifier"><i class="bi bi-pencil-square"></i></a>
+                                    <button type="button" class="btn btn-light text-danger" data-bs-toggle="modal" data-bs-target="#deleteArticle{{ article.pk }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+
+                                <div class="modal fade" id="deleteArticle{{ article.pk }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                                        <div class="modal-content text-center p-3">
+                                            <div class="modal-body">
+                                                <i class="bi bi-exclamation-circle text-danger display-4 mb-2"></i>
+                                                <h5 class="font-heading">Supprimer cet article ?</h5>
+                                                <p class="small text-muted mb-3">« {{ article.title }} » sera supprimé.</p>
+                                                <form method="POST" action="{% url 'dashboard:article_delete' article.pk %}">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-danger">Confirmer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="7" class="text-center py-4 text-muted">Aucun article rédigé pour le moment.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

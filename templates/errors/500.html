@@ -1,0 +1,18 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Erreur Serveur (500) - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 my-5 text-center">
+    <div class="container py-5">
+        <div class="display-1 fw-bold text-danger font-heading mb-3">500</div>
+        <h2 class="h3 font-heading mb-3">Une erreur inattendue est survenue</h2>
+        <p class="text-muted mx-auto mb-4" style="max-width: 500px;">
+            Nos équipes techniques sont alertées et résolvent le problème au plus vite.
+        </p>
+        <a href="{% url 'core:home' %}" class="btn btn-pv-primary px-4 py-2">
+            <i class="bi bi-house-door-fill me-1"></i> Retour à l'accueil
+        </a>
+    </div>
+</section>
+{% endblock %}

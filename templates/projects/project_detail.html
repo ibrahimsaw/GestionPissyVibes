@@ -1,0 +1,70 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white-50">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'projects:project_list' %}" class="text-white-50">Projets</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page">{{ project.title|truncatewords:5 }}</li>
+            </ol>
+        </nav>
+        <span class="badge {{ project.get_status_badge }} px-3 py-2 mb-2">{{ project.get_status_display }}</span>
+        <h1 class="display-5 font-heading fw-bold">{{ project.title }}</h1>
+        <div class="d-flex flex-wrap gap-4 text-white-50 mt-3">
+            <span><i class="bi bi-geo-alt text-danger me-1"></i> {{ project.location }}</span>
+            <span><i class="bi bi-calendar-check text-warning me-1"></i> Début : {{ project.start_date|date:"F Y" }}</span>
+            {% if project.end_date %}
+                <span><i class="bi bi-flag text-success me-1"></i> Échéance : {{ project.end_date|date:"F Y" }}</span>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                {% if project.cover_image %}
+                    <div class="rounded-4 overflow-hidden mb-4 shadow-sm">
+                        <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="img-fluid w-100 object-fit-cover" style="max-height: 450px;">
+                    </div>
+                {% endif %}
+
+                <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm mb-4">
+                    <h3 class="font-heading mb-3">Présentation du projet</h3>
+                    <p class="lead text-muted">{{ project.summary }}</p>
+                    
+                    <hr class="my-4">
+                    
+                    <h3 class="font-heading mb-3"><i class="bi bi-bullseye text-danger me-2"></i> Objectifs poursuivis</h3>
+                    <div class="p-3 bg-light rounded-3 text-muted mb-4">
+                        {{ project.objective|linebreaks }}
+                    </div>
+
+                    <h3 class="font-heading mb-3">Description détaillée</h3>
+                    <div class="article-content text-muted lh-lg">
+                        {{ project.description|linebreaks }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+                    <h4 class="h5 font-heading mb-3">Soutenir ce projet</h4>
+                    <p class="small text-muted mb-4">Vous êtes une institution, une entreprise ou un particulier souhaitant apporter un appui financier, matériel ou humain à ce projet ?</p>
+                    <a href="{% url 'contact:contact_view' %}?subject=Soutien au projet {{ project.title|urlencode }}" class="btn btn-pv-primary w-100 mb-2">
+                        Devenir partenaire du projet
+                    </a>
+                    <a href="{% url 'volunteers:join_view' %}" class="btn btn-pv-outline w-100">
+                        Devenir bénévole
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

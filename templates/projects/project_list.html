@@ -1,0 +1,40 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Nos Projets d'Impact - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container py-lg-2">
+        <span class="badge bg-warning text-dark text-uppercase px-3 py-2 mb-2">Programmes Structurants</span>
+        <h1 class="display-5 font-heading fw-bold mb-2">Nos Grands Projets</h1>
+        <p class="lead text-white-50 mx-auto mb-0" style="max-width: 650px;">
+            Des initiatives durables pour transformer durablement l'environnement et l'épanouissement de la jeunesse.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap">
+            <a href="{% url 'projects:project_list' %}" class="btn btn-sm {% if not selected_status %}btn-success{% else %}btn-light{% endif %} rounded-pill px-3">Tous les projets</a>
+            {% for code, label in status_choices %}
+                <a href="?status={{ code }}" class="btn btn-sm {% if selected_status == code %}btn-success{% else %}btn-light{% endif %} rounded-pill px-3">{{ label }}</a>
+            {% endfor %}
+        </div>
+
+        <div class="row g-4">
+            {% for project in projects %}
+                <div class="col-md-6 col-lg-4">
+                    {% include 'components/project_card.html' with project=project %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <p>Aucun projet enregistré dans cette catégorie.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% include 'components/pagination.html' with page_obj=projects %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,79 @@
+﻿{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Bénévoles & Adhésions - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+    <div>
+        <h1 class="h3 font-heading text-dark mb-1">Candidatures de Bénévolat</h1>
+        <p class="text-muted small mb-0">Suivez les demandes des jeunes souhaitant rejoindre Pissy Vibes.</p>
+    </div>
+    <a href="{% url 'dashboard:volunteer_export_csv' %}" class="btn btn-outline-success">
+        <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exporter tous les Bénévoles (CSV)
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light small">
+                    <tr>
+                        <th>Bénévole</th>
+                        <th>Contact</th>
+                        <th>Quartier / Âge</th>
+                        <th>Pôle d'intérêt</th>
+                        <th>Disponibilité</th>
+                        <th>Statut</th>
+                        <th class="text-end">Changer Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vol in volunteers %}
+                        <tr>
+                            <td>
+                                <div class="fw-bold text-dark">{{ vol.first_name }} {{ vol.last_name }}</div>
+                                <small class="text-muted">Reçu le {{ vol.created_at|date:"d/m/Y H:i" }}</small>
+                            </td>
+                            <td class="small">
+                                <div><a href="tel:{{ vol.phone }}" class="text-decoration-none fw-semibold text-dark">{{ vol.phone }}</a></div>
+                                {% if vol.email %}<div class="text-muted">{{ vol.email }}</div>{% endif %}
+                            </td>
+                            <td class="small">
+                                <div>{{ vol.city_neighborhood }}</div>
+                                {% if vol.age %}<small class="text-muted">{{ vol.age }} ans</small>{% endif %}
+                            </td>
+                            <td><span class="badge bg-light text-dark border">{{ vol.get_interest_domain_display }}</span></td>
+                            <td class="small text-muted">{{ vol.availability }}</td>
+                            <td>
+                                {% if vol.status == 'pending' %}
+                                    <span class="badge bg-warning text-dark">En attente</span>
+                                {% elif vol.status == 'contacted' %}
+                                    <span class="badge bg-info text-dark">Contacté</span>
+                                {% elif vol.status == 'accepted' %}
+                                    <span class="badge bg-success">Accepté</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Archivé</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <form method="POST" action="{% url 'dashboard:volunteer_update_status' vol.pk %}" class="d-inline-flex gap-1">
+                                    {% csrf_token %}
+                                    <select name="status" class="form-select form-select-sm" onchange="this.form.submit();">
+                                        <option value="pending" {% if vol.status == 'pending' %}selected{% endif %}>En attente</option>
+                                        <option value="contacted" {% if vol.status == 'contacted' %}selected{% endif %}>Contacté</option>
+                                        <option value="accepted" {% if vol.status == 'accepted' %}selected{% endif %}>Accepté</option>
+                                        <option value="archived" {% if vol.status == 'archived' %}selected{% endif %}>Archivé</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="7" class="text-center py-4 text-muted">Aucune candidature de bénévole.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

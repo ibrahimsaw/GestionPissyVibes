@@ -1,0 +1,43 @@
+﻿<div class="pv-card">
+    <div class="pv-card-img-wrapper">
+        {% if event.cover_image %}
+            <img src="{{ event.cover_image.url }}" alt="{{ event.title }}" class="pv-card-img" loading="lazy">
+        {% else %}
+            <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary-subtle text-muted">
+                <i class="bi bi-calendar-event fs-1 opacity-50"></i>
+            </div>
+        {% endif %}
+        {% if event.is_past %}
+            <span class="pv-card-badge bg-secondary text-white">Terminé</span>
+        {% else %}
+            <span class="pv-card-badge bg-success text-white">À venir</span>
+        {% endif %}
+    </div>
+    <div class="pv-card-body">
+        <div class="pv-card-meta">
+            <span><i class="bi bi-calendar-check me-1 text-success"></i> {{ event.event_date|date:"l d F Y" }}</span>
+            {% if event.start_time %}
+                <span><i class="bi bi-clock me-1 text-warning"></i> {{ event.start_time|time:"H:i" }}</span>
+            {% endif %}
+        </div>
+        <h3 class="pv-card-title">
+            <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+        </h3>
+        <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i> {{ event.location }}</p>
+        <p class="text-muted small mb-3 flex-grow-1">
+            {{ event.description|truncatewords:18 }}
+        </p>
+        <div class="d-flex align-items-center justify-content-between pt-2 border-top">
+            <span class="badge bg-light text-dark border">
+                {% if event.capacity > 0 %}
+                    {{ event.remaining_capacity }} places restantes
+                {% else %}
+                    Entrée libre
+                {% endif %}
+            </span>
+            <a href="{{ event.get_absolute_url }}" class="btn btn-sm btn-pv-secondary">
+                {% if event.registration_enabled and not event.is_past %}Participer{% else %}Voir détails{% endif %}
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ album.title }} - Galerie Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white-50">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'gallery:gallery_list' %}" class="text-white-50">Galerie</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page">{{ album.title }}</li>
+            </ol>
+        </nav>
+        <h1 class="display-5 font-heading fw-bold">{{ album.title }}</h1>
+        {% if album.description %}
+            <p class="lead text-white-50 mt-2">{{ album.description }}</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-3">
+            {% for photo in photos %}
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="#" class="d-block rounded-4 overflow-hidden shadow-sm ratio ratio-1x1 position-relative group" data-pv-lightbox data-img-src="{{ photo.image.url }}" data-caption="{{ photo.title|default:photo.caption }}">
+                        <img src="{{ photo.image.url }}" alt="{{ photo.alt_text }}" class="object-fit-cover w-100 h-100" loading="lazy">
+                        <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-dark bg-opacity-50 text-white text-truncate small">
+                            {{ photo.title|default:photo.caption }}
+                        </div>
+                    </a>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <p>Cet album ne contient pas encore de photos.</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'gallery:gallery_list' %}" class="btn btn-pv-outline"><i class="bi bi-arrow-left me-1"></i> Retour à la galerie</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

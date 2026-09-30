@@ -1,0 +1,124 @@
+﻿{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Coordonnées & Paramètres - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h1 class="h3 font-heading text-dark mb-1">Coordonnées & Paramètres du Site</h1>
+    <p class="text-muted small mb-0">Modifiez les informations officielles, coordonnées, réseaux sociaux et chiffres de la page d'accueil.</p>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-body p-4 p-lg-5">
+        <form method="POST">
+            {% csrf_token %}
+
+            <h5 class="font-heading text-success border-bottom pb-2 mb-3">Identité & Slogan</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Nom de l'association *</label>
+                    {{ form.site_name }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Devise / Slogan *</label>
+                    {{ form.tagline }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Vision</label>
+                    {{ form.vision }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Présentation courte (Homepage)</label>
+                    {{ form.about_summary }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Notre Mission</label>
+                    {{ form.mission }}
+                </div>
+            </div>
+
+            <h5 class="font-heading text-success border-bottom pb-2 mb-3">Coordonnées Officielles</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Email officiel</label>
+                    {{ form.email }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Téléphone</label>
+                    {{ form.phone }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Numéro WhatsApp</label>
+                    {{ form.whatsapp }}
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label fw-bold small">Adresse physique</label>
+                    {{ form.address }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Horaires d'accueil</label>
+                    {{ form.opening_hours }}
+                </div>
+            </div>
+
+            <h5 class="font-heading text-success border-bottom pb-2 mb-3">Réseaux Sociaux</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Lien Facebook</label>
+                    {{ form.facebook_url }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Lien Instagram</label>
+                    {{ form.instagram_url }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Lien TikTok</label>
+                    {{ form.tiktok_url }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Lien YouTube</label>
+                    {{ form.youtube_url }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Lien X (Twitter)</label>
+                    {{ form.twitter_url }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Lien LinkedIn</label>
+                    {{ form.linkedin_url }}
+                </div>
+            </div>
+
+            <h5 class="font-heading text-success border-bottom pb-2 mb-3">Statistiques de la Page d'Accueil (Chiffres Clés)</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md">
+                    <label class="form-label fw-bold small">Actions réalisées</label>
+                    {{ form.stat_actions_count }}
+                </div>
+                <div class="col-6 col-md">
+                    <label class="form-label fw-bold small">Jeunes mobilisés</label>
+                    {{ form.stat_volunteers_count }}
+                </div>
+                <div class="col-6 col-md">
+                    <label class="form-label fw-bold small">Arbres plantés</label>
+                    {{ form.stat_trees_planted }}
+                </div>
+                <div class="col-6 col-md">
+                    <label class="form-label fw-bold small">Quartiers touchés</label>
+                    {{ form.stat_neighborhoods_count }}
+                </div>
+                <div class="col-6 col-md">
+                    <label class="form-label fw-bold small">Événements</label>
+                    {{ form.stat_events_count }}
+                </div>
+            </div>
+
+            <div class="pt-3 border-top">
+                <button type="submit" class="btn btn-success btn-lg fw-bold px-5">
+                    <i class="bi bi-check-circle-fill me-1"></i> Enregistrer les modifications
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

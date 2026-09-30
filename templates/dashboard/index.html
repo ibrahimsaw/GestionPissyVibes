@@ -1,0 +1,157 @@
+﻿{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Tableau de Bord - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+    <div>
+        <h1 class="h3 font-heading text-dark mb-1">Tableau de Bord</h1>
+        <p class="text-muted small mb-0">Bienvenue dans votre interface de gestion quotidienne de Pissy Vibes.</p>
+    </div>
+    <div class="d-flex gap-2 flex-wrap">
+        <a href="{% url 'dashboard:action_create' %}" class="btn btn-success shadow-sm">
+            <i class="bi bi-plus-circle-fill me-1"></i> Nouvelle Action
+        </a>
+        <a href="{% url 'dashboard:event_create' %}" class="btn btn-warning text-dark shadow-sm fw-bold">
+            <i class="bi bi-calendar-plus-fill me-1"></i> Nouvel Événement
+        </a>
+        <a href="{% url 'dashboard:article_create' %}" class="btn btn-dark shadow-sm">
+            <i class="bi bi-pencil-square me-1"></i> Publier Article
+        </a>
+    </div>
+</div>
+
+<!-- Compteurs Statistiques -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-4 col-xl-2">
+        <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div class="text-success fs-3 mb-1"><i class="bi bi-compass-fill"></i></div>
+            <h3 class="h4 font-heading mb-0 text-dark">{{ actions_count }}</h3>
+            <small class="text-muted">Actions créées</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+        <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div class="text-warning fs-3 mb-1"><i class="bi bi-lightbulb-fill"></i></div>
+            <h3 class="h4 font-heading mb-0 text-dark">{{ projects_count }}</h3>
+            <small class="text-muted">Projets d'impact</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+        <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div class="text-primary fs-3 mb-1"><i class="bi bi-calendar-event-fill"></i></div>
+            <h3 class="h4 font-heading mb-0 text-dark">{{ events_count }}</h3>
+            <small class="text-muted">Événements</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+        <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div class="text-info fs-3 mb-1"><i class="bi bi-newspaper"></i></div>
+            <h3 class="h4 font-heading mb-0 text-dark">{{ articles_count }}</h3>
+            <small class="text-muted">Articles de blog</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+        <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div class="text-danger fs-3 mb-1"><i class="bi bi-person-plus-fill"></i></div>
+            <h3 class="h4 font-heading mb-0 text-dark">{{ pending_volunteers_count }}</h3>
+            <small class="text-muted">Bénévoles en attente</small>
+        </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+        <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div class="text-secondary fs-3 mb-1"><i class="bi bi-envelope-fill"></i></div>
+            <h3 class="h4 font-heading mb-0 text-dark">{{ unread_messages_count }}</h3>
+            <small class="text-muted">Messages non lus</small>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Dernières candidatures de bénévoles -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 bg-white h-100">
+            <div class="card-header bg-transparent border-0 p-4 pb-2 d-flex justify-content-between align-items-center">
+                <h4 class="h5 font-heading text-dark mb-0">Derniers Bénévoles Inscrits</h4>
+                <a href="{% url 'dashboard:volunteer_list' %}" class="btn btn-sm btn-outline-success">Tout voir</a>
+            </div>
+            <div class="card-body p-4 pt-2">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 small">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nom</th>
+                                <th>Téléphone</th>
+                                <th>Domaine</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vol in latest_volunteers %}
+                                <tr>
+                                    <td class="fw-bold">{{ vol.first_name }} {{ vol.last_name }}</td>
+                                    <td>{{ vol.phone }}</td>
+                                    <td><span class="badge bg-light text-dark border">{{ vol.get_interest_domain_display }}</span></td>
+                                    <td>
+                                        {% if vol.status == 'pending' %}
+                                            <span class="badge bg-warning text-dark">En attente</span>
+                                        {% elif vol.status == 'accepted' %}
+                                            <span class="badge bg-success">Accepté</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">{{ vol.get_status_display }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr><td colspan="4" class="text-center py-3 text-muted">Aucune candidature pour le moment.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Derniers messages de contact -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 bg-white h-100">
+            <div class="card-header bg-transparent border-0 p-4 pb-2 d-flex justify-content-between align-items-center">
+                <h4 class="h5 font-heading text-dark mb-0">Messages de Contact Récents</h4>
+                <a href="{% url 'dashboard:message_list' %}" class="btn btn-sm btn-outline-success">Tout voir</a>
+            </div>
+            <div class="card-body p-4 pt-2">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 small">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Expéditeur</th>
+                                <th>Sujet</th>
+                                <th>Date</th>
+                                <th>État</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for msg in latest_messages %}
+                                <tr>
+                                    <td class="fw-bold">{{ msg.name }}</td>
+                                    <td>{{ msg.subject|truncatechars:25 }}</td>
+                                    <td>{{ msg.created_at|date:"d/m H:i" }}</td>
+                                    <td>
+                                        {% if msg.is_read %}
+                                            <span class="badge bg-light text-muted border">Traité</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Nouveau</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr><td colspan="4" class="text-center py-3 text-muted">Aucun message de contact.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

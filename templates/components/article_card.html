@@ -1,0 +1,29 @@
+﻿<div class="pv-card">
+    <div class="pv-card-img-wrapper">
+        {% if article.cover_image %}
+            <img src="{{ article.cover_image.url }}" alt="{{ article.title }}" class="pv-card-img" loading="lazy">
+        {% else %}
+            <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary-subtle text-muted">
+                <i class="bi bi-newspaper fs-1 opacity-50"></i>
+            </div>
+        {% endif %}
+        {% if article.category %}
+            <span class="pv-card-badge bg-dark text-white">{{ article.category.name }}</span>
+        {% endif %}
+    </div>
+    <div class="pv-card-body">
+        <div class="pv-card-meta">
+            <span><i class="bi bi-calendar3 me-1 text-success"></i> {{ article.published_at|date:"d M Y" }}</span>
+            <span><i class="bi bi-person me-1 text-primary"></i> {{ article.author_display_name }}</span>
+        </div>
+        <h3 class="pv-card-title">
+            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+        </h3>
+        <p class="text-muted small mb-3 flex-grow-1">
+            {{ article.excerpt|truncatewords:20 }}
+        </p>
+        <div class="pt-2 border-top text-end">
+            <a href="{{ article.get_absolute_url }}" class="text-success fw-bold small text-decoration-none">Lire l'article <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+    </div>
+</div>

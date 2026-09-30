@@ -1,0 +1,27 @@
+﻿<div class="pv-card">
+    <div class="pv-card-img-wrapper">
+        {% if project.cover_image %}
+            <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="pv-card-img" loading="lazy">
+        {% else %}
+            <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary-subtle text-muted">
+                <i class="bi bi-folder2-open fs-1 opacity-50"></i>
+            </div>
+        {% endif %}
+        <span class="pv-card-badge {{ project.get_status_badge }}">{{ project.get_status_display }}</span>
+    </div>
+    <div class="pv-card-body">
+        <div class="pv-card-meta">
+            <span><i class="bi bi-geo-alt me-1 text-danger"></i> {{ project.location }}</span>
+            <span><i class="bi bi-calendar-range me-1 text-success"></i> Depuis {{ project.start_date|date:"M Y" }}</span>
+        </div>
+        <h3 class="pv-card-title">
+            <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+        </h3>
+        <p class="text-muted small mb-3 flex-grow-1">
+            {{ project.summary|truncatewords:20 }}
+        </p>
+        <div class="pt-2 border-top">
+            <a href="{{ project.get_absolute_url }}" class="btn btn-sm btn-pv-primary w-100">Découvrir le projet <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+    </div>
+</div>

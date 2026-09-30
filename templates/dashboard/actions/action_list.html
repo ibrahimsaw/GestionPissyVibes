@@ -1,0 +1,93 @@
+﻿{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Gestion des Actions - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+    <div>
+        <h1 class="h3 font-heading text-dark mb-1">Actions Citoyennes & Écologiques</h1>
+        <p class="text-muted small mb-0">Consultez, ajoutez ou modifiez les actions de nettoyage et de reboisement.</p>
+    </div>
+    <a href="{% url 'dashboard:action_create' %}" class="btn btn-success shadow-sm">
+        <i class="bi bi-plus-circle-fill me-1"></i> Ajouter une Nouvelle Action
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light small">
+                    <tr>
+                        <th>Aperçu</th>
+                        <th>Titre</th>
+                        <th>Catégorie</th>
+                        <th>Statut</th>
+                        <th>Date</th>
+                        <th>Lieu</th>
+                        <th>Participants</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for action in actions %}
+                        <tr>
+                            <td style="width: 70px;">
+                                {% if action.cover_image %}
+                                    <img src="{{ action.cover_image.url }}" alt="{{ action.title }}" class="rounded-3 object-fit-cover" width="50" height="38">
+                                {% else %}
+                                    <div class="bg-light rounded-3 d-flex align-items-center justify-content-center text-muted" style="width: 50px; height: 38px;">
+                                        <i class="bi bi-camera"></i>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="fw-bold text-dark">{{ action.title }}</div>
+                                {% if action.featured %}
+                                    <span class="badge bg-warning-subtle text-warning border border-warning" style="font-size: 0.65rem;">En vedette</span>
+                                {% endif %}
+                            </td>
+                            <td><span class="badge bg-light text-dark border">{{ action.get_category_display }}</span></td>
+                            <td><span class="badge {{ action.get_status_badge }}">{{ action.get_status_display }}</span></td>
+                            <td class="small">{{ action.date|date:"d/m/Y" }}</td>
+                            <td class="small text-muted">{{ action.location }}</td>
+                            <td class="small fw-bold text-success">{{ action.participants_count }}</td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ action.get_absolute_url }}" target="_blank" class="btn btn-light" title="Voir sur le site"><i class="bi bi-eye"></i></a>
+                                    <a href="{% url 'dashboard:action_edit' action.pk %}" class="btn btn-light text-primary" title="Modifier"><i class="bi bi-pencil-square"></i></a>
+                                    <button type="button" class="btn btn-light text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ action.pk }}" title="Supprimer">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Modal de confirmation de suppression -->
+                                <div class="modal fade" id="deleteModal{{ action.pk }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                                        <div class="modal-content text-center p-3">
+                                            <div class="modal-body">
+                                                <i class="bi bi-exclamation-circle text-danger display-4 mb-2"></i>
+                                                <h5 class="font-heading">Supprimer cette action ?</h5>
+                                                <p class="small text-muted mb-3">« {{ action.title }} » sera définitivement retirée.</p>
+                                                <form method="POST" action="{% url 'dashboard:action_delete' action.pk %}">
+                                                    {% csrf_token %}
+                                                    <div class="d-flex justify-content-center gap-2">
+                                                        <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Annuler</button>
+                                                        <button type="submit" class="btn btn-sm btn-danger">Confirmer</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="8" class="text-center py-4 text-muted">Aucune action enregistrée pour le moment.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

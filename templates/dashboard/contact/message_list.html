@@ -1,0 +1,64 @@
+﻿{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Messages Reçus - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h1 class="h3 font-heading text-dark mb-1">Messages de Contact</h1>
+    <p class="text-muted small mb-0">Boîte de réception des messages envoyés par les visiteurs du site.</p>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light small">
+                    <tr>
+                        <th>Expéditeur</th>
+                        <th>Coordonnées</th>
+                        <th>Sujet & Message</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in contact_messages %}
+                        <tr class="{% if not msg.is_read %}table-warning bg-opacity-25{% endif %}">
+                            <td>
+                                <div class="fw-bold text-dark">{{ msg.name }}</div>
+                            </td>
+                            <td class="small">
+                                <div><a href="mailto:{{ msg.email }}">{{ msg.email }}</a></div>
+                                {% if msg.phone %}<div>{{ msg.phone }}</div>{% endif %}
+                            </td>
+                            <td>
+                                <div class="fw-bold text-dark">{{ msg.subject }}</div>
+                                <p class="text-muted small mb-0">{{ msg.message }}</p>
+                            </td>
+                            <td class="small text-muted">{{ msg.created_at|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                {% if msg.is_read %}
+                                    <span class="badge bg-light text-muted border">Traité</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Nouveau</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <form method="POST" action="{% url 'dashboard:message_toggle_read' msg.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm {% if msg.is_read %}btn-outline-secondary{% else %}btn-success{% endif %}">
+                                        {% if msg.is_read %}<i class="bi bi-arrow-counterclockwise me-1"></i> Marquer non lu{% else %}<i class="bi bi-check-circle me-1"></i> Marquer traité{% endif %}
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="6" class="text-center py-4 text-muted">Aucun message de contact dans la boîte de réception.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}À propos de Pissy Vibes{% endblock %}
+
+{% block content %}
+<!-- Header Page -->
+<section class="py-5 bg-dark text-white text-center position-relative">
+    <div class="container py-lg-3">
+        <span class="badge bg-success text-uppercase px-3 py-2 mb-2">Association Citoyenne</span>
+        <h1 class="display-5 font-heading fw-bold mb-3">Qui sommes-nous ?</h1>
+        <p class="lead text-white-50 mx-auto mb-0" style="max-width: 700px;">
+            « {{ site_settings.tagline|default:"Ensemble, on bouge, on nettoie et on fête." }} »
+        </p>
+    </div>
+</section>
+
+<!-- Histoire & Vision -->
+<section class="py-5">
+    <div class="container py-lg-4">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <span class="section-subtitle">Notre Histoire</span>
+                <h2 class="section-title">L'étincelle née à Pissy</h2>
+                <p class="text-muted lead">
+                    {{ site_settings.about_full_history|linebreaks }}
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 bg-light p-4 rounded-4 shadow-sm">
+                    <h4 class="font-heading text-success mb-3"><i class="bi bi-eye-fill me-2"></i> Notre Vision</h4>
+                    <p class="text-muted mb-4">{{ site_settings.vision }}</p>
+                    
+                    <h4 class="font-heading text-warning mb-3"><i class="bi bi-flag-fill me-2"></i> Notre Mission</h4>
+                    <p class="text-muted mb-0">{{ site_settings.mission }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Nos Valeurs Fondamentales -->
+<section class="py-5 bg-white border-top border-bottom">
+    <div class="container py-lg-4 text-center">
+        <span class="section-subtitle">Nos Principes</span>
+        <h2 class="section-title mb-5">Les Valeurs qui nous guident</h2>
+
+        <div class="row g-4 text-start">
+            <div class="col-md-6 col-lg-4">
+                <div class="p-3 border rounded-3 h-100">
+                    <div class="text-success fs-3 mb-2"><i class="bi bi-handshake-fill"></i> Engagement & Solidarité</div>
+                    <p class="text-muted small mb-0">Agir collectivement avec dévouement et entraide pour le bien-être commun de nos quartiers.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="p-3 border rounded-3 h-100">
+                    <div class="text-success fs-3 mb-2"><i class="bi bi-tree-fill"></i> Écologie & Citoyenneté</div>
+                    <p class="text-muted small mb-0">Prendre soin de notre cadre de vie et faire de chaque jeune un ambassadeur de la propreté.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="p-3 border rounded-3 h-100">
+                    <div class="text-success fs-3 mb-2"><i class="bi bi-palette-fill"></i> Créativité & Culture</div>
+                    <p class="text-muted small mb-0">Utiliser l'art, la musique et l'expression urbaine comme leviers d'impact environnemental.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="p-3 border rounded-3 h-100">
+                    <div class="text-success fs-3 mb-2"><i class="bi bi-people-fill"></i> Jeunesse & Dynamisme</div>
+                    <p class="text-muted small mb-0">Canaliser la vitalité des jeunes burkinabè vers des actions positives et durables.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="p-3 border rounded-3 h-100">
+                    <div class="text-success fs-3 mb-2"><i class="bi bi-lightning-charge-fill"></i> Action Concrète</div>
+                    <p class="text-muted small mb-0">Moins de longs discours, plus d'actes visibles et mesurables sur le terrain.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="p-3 border rounded-3 h-100">
+                    <div class="text-success fs-3 mb-2"><i class="bi bi-balloon-fill"></i> Joie & Festivité</div>
+                    <p class="text-muted small mb-0">Nettoyer dans la bonne humeur et célébrer chaque victoire communautaire ensemble.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Notre Équipe -->
+<section class="py-5" id="equipe">
+    <div class="container py-lg-4">
+        <div class="text-center section-header">
+            <span class="section-subtitle">Ceux qui portent la flamme</span>
+            <h2 class="section-title">L'Équipe de Pissy Vibes</h2>
+            <p class="text-muted mx-auto" style="max-width: 600px;">
+                Des bénévoles et responsables dévoués, portés par le sens du service civique et de l'innovation environnementale.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            {% for member in members %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    {% include 'components/member_card.html' with member=member %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-4 text-muted">
+                    <p>La présentation de l'équipe sera bientôt en ligne.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Partenaires -->
+{% if partners %}
+<section class="py-5 bg-light" id="partenaires">
+    <div class="container text-center py-lg-3">
+        <span class="section-subtitle">Ensemble pour l'impact</span>
+        <h3 class="section-title">Nos Partenaires</h3>
+        <div class="row g-4 justify-content-center mt-3">
+            {% for partner in partners %}
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="bg-white p-3 rounded-3 shadow-sm h-100 d-flex align-items-center justify-content-center">
+                        {% if partner.logo %}
+                            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid" style="max-height: 45px; object-fit: contain;">
+                        {% else %}
+                            <span class="fw-bold small">{{ partner.name }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

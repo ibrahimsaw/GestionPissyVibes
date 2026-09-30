@@ -1,0 +1,116 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Galerie Photos & Vidéos - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container py-lg-2">
+        <span class="badge bg-danger text-uppercase px-3 py-2 mb-2">Vivre l'action</span>
+        <h1 class="display-5 font-heading fw-bold mb-2">Galerie Multimédia</h1>
+        <p class="lead text-white-50 mx-auto mb-0" style="max-width: 650px;">
+            Plongez au cœur de nos actions de salubrité, de fête et d'engagement citoyen en images et vidéos.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Onglets Albums / Toutes les photos / Vidéos -->
+        <ul class="nav nav-pills justify-content-center mb-5 gap-2" id="galleryTabs">
+            <li class="nav-item">
+                <a class="nav-link {% if tab == 'albums' %}active bg-success{% else %}bg-light text-dark{% endif %} rounded-pill px-4" href="?tab=albums">
+                    <i class="bi bi-folder-fill me-1"></i> Albums Photos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if tab == 'photos' %}active bg-success{% else %}bg-light text-dark{% endif %} rounded-pill px-4" href="?tab=photos">
+                    <i class="bi bi-images me-1"></i> Toutes les Photos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if tab == 'videos' %}active bg-success{% else %}bg-light text-dark{% endif %} rounded-pill px-4" href="?tab=videos">
+                    <i class="bi bi-play-circle-fill me-1"></i> Vidéos
+                </a>
+            </li>
+        </ul>
+
+        {% if tab == 'videos' %}
+            <div class="row g-4">
+                {% for video in videos %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 bg-white">
+                            <div class="ratio ratio-16x9">
+                                <iframe src="{{ video.get_embed_url }}" title="{{ video.title }}" allowfullscreen></iframe>
+                            </div>
+                            <div class="p-3">
+                                <h5 class="font-heading mb-1">{{ video.title }}</h5>
+                                {% if video.description %}
+                                    <p class="text-muted small mb-0">{{ video.description }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center py-5 text-muted">
+                        <p>Aucune vidéo pour le moment.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% elif tab == 'photos' %}
+            <div class="row g-3">
+                {% for photo in all_photos %}
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="#" class="d-block rounded-3 overflow-hidden shadow-sm ratio ratio-1x1 position-relative group" data-pv-lightbox data-img-src="{{ photo.image.url }}" data-caption="{{ photo.title|default:photo.caption }}">
+                            <img src="{{ photo.image.url }}" alt="{{ photo.alt_text }}" class="object-fit-cover w-100 h-100" loading="lazy">
+                            <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-gradient bg-dark text-white text-truncate small">
+                                {{ photo.title|default:photo.album.title }}
+                            </div>
+                        </a>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center py-5 text-muted">
+                        <p>Aucune photo disponible pour l'instant.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Albums -->
+            <div class="row g-4">
+                {% for album in albums %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="pv-card">
+                            <div class="pv-card-img-wrapper">
+                                {% if album.cover_image %}
+                                    <img src="{{ album.cover_image.url }}" alt="{{ album.title }}" class="pv-card-img" loading="lazy">
+                                {% elif album.photos.first %}
+                                    <img src="{{ album.photos.first.image.url }}" alt="{{ album.title }}" class="pv-card-img" loading="lazy">
+                                {% else %}
+                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary-subtle text-muted">
+                                        <i class="bi bi-images fs-1 opacity-50"></i>
+                                    </div>
+                                {% endif %}
+                                <span class="pv-card-badge bg-dark text-white"><i class="bi bi-camera-fill me-1"></i> {{ album.photos.count }} photos</span>
+                            </div>
+                            <div class="pv-card-body">
+                                <h3 class="pv-card-title">
+                                    <a href="{{ album.get_absolute_url }}">{{ album.title }}</a>
+                                </h3>
+                                {% if album.description %}
+                                    <p class="text-muted small mb-3 flex-grow-1">{{ album.description|truncatewords:15 }}</p>
+                                {% endif %}
+                                <div class="pt-2 border-top">
+                                    <a href="{{ album.get_absolute_url }}" class="btn btn-sm btn-pv-outline w-100">Ouvrir l'album <i class="bi bi-arrow-right ms-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center py-5 text-muted">
+                        <p>Aucun album photo créé pour l'instant.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

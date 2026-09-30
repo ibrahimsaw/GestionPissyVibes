@@ -1,0 +1,41 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Agenda & Événements - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container py-lg-2">
+        <span class="badge bg-success text-uppercase px-3 py-2 mb-2">Rencontres & Mobilisations</span>
+        <h1 class="display-5 font-heading fw-bold mb-2">Agenda des Événements</h1>
+        <p class="lead text-white-50 mx-auto mb-0" style="max-width: 650px;">
+            Participez à nos journées éco-citoyennes, festivals artistiques, tournois sportifs et formations.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-center gap-3 mb-5">
+            <a href="?type=upcoming" class="btn {% if filter_type != 'past' %}btn-success{% else %}btn-light{% endif %} rounded-pill px-4">
+                <i class="bi bi-calendar-check me-1"></i> Événements à venir
+            </a>
+            <a href="?type=past" class="btn {% if filter_type == 'past' %}btn-success{% else %}btn-light{% endif %} rounded-pill px-4">
+                <i class="bi bi-clock-history me-1"></i> Événements passés
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for event in events %}
+                <div class="col-md-6 col-lg-4">
+                    {% include 'components/event_card.html' with event=event %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <i class="bi bi-calendar-x fs-1 opacity-50"></i>
+                    <p class="mt-3">Aucun événement à afficher pour le moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

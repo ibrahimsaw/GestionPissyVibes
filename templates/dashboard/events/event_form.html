@@ -1,0 +1,74 @@
+﻿{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}{{ title }} - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="{% url 'dashboard:event_list' %}" class="text-decoration-none text-muted small">
+        <i class="bi bi-arrow-left me-1"></i> Retour aux événements
+    </a>
+    <h1 class="h3 font-heading text-dark mt-2 mb-0">{{ title }}</h1>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-body p-4 p-lg-5">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-4">
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Titre de l'événement *</label>
+                    {{ form.title }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Date *</label>
+                    {{ form.event_date }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Heure de début</label>
+                    {{ form.start_time }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Heure de fin</label>
+                    {{ form.end_time }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Lieu / Ville *</label>
+                    {{ form.location }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Adresse précise</label>
+                    {{ form.address }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Capacité maximale (0 = illimité)</label>
+                    {{ form.capacity }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Affiche / Image de couverture</label>
+                    {{ form.cover_image }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold small">Description complète *</label>
+                    {{ form.description }}
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        {{ form.registration_enabled }}
+                        <label class="form-check-label fw-bold small ms-2">Inscriptions en ligne ouvertes</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        {{ form.featured }}
+                        <label class="form-check-label fw-bold small ms-2">Mettre en avant sur la page d'accueil</label>
+                    </div>
+                </div>
+                <div class="col-12 pt-3 border-top d-flex gap-2">
+                    <button type="submit" class="btn btn-success btn-lg fw-bold px-4">Enregistrer l'événement</button>
+                    <a href="{% url 'dashboard:event_list' %}" class="btn btn-light btn-lg">Annuler</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

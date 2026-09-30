@@ -1,0 +1,77 @@
+﻿{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Gestion des Projets - Espace Gestion{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+    <div>
+        <h1 class="h3 font-heading text-dark mb-1">Projets & Programmes d'Impact</h1>
+        <p class="text-muted small mb-0">Pilotez les grands projets environnementaux et communautaires.</p>
+    </div>
+    <a href="{% url 'dashboard:project_create' %}" class="btn btn-success shadow-sm">
+        <i class="bi bi-plus-circle-fill me-1"></i> Nouveau Projet
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 bg-white">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light small">
+                    <tr>
+                        <th>Titre</th>
+                        <th>Statut</th>
+                        <th>Zone d'impact</th>
+                        <th>Période</th>
+                        <th>En Vedette</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                        <tr>
+                            <td>
+                                <div class="fw-bold text-dark">{{ project.title }}</div>
+                                <small class="text-muted">{{ project.summary|truncatewords:10 }}</small>
+                            </td>
+                            <td><span class="badge {{ project.get_status_badge }}">{{ project.get_status_display }}</span></td>
+                            <td class="small">{{ project.location }}</td>
+                            <td class="small">{{ project.start_date|date:"d/m/Y" }}{% if project.end_date %} au {{ project.end_date|date:"d/m/Y" }}{% endif %}</td>
+                            <td>
+                                {% if project.featured %}<i class="bi bi-star-fill text-warning"></i>{% else %}-{% endif %}
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ project.get_absolute_url }}" target="_blank" class="btn btn-light" title="Voir"><i class="bi bi-eye"></i></a>
+                                    <a href="{% url 'dashboard:project_edit' project.pk %}" class="btn btn-light text-primary" title="Modifier"><i class="bi bi-pencil-square"></i></a>
+                                    <button type="button" class="btn btn-light text-danger" data-bs-toggle="modal" data-bs-target="#deleteProject{{ project.pk }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+
+                                <div class="modal fade" id="deleteProject{{ project.pk }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                                        <div class="modal-content text-center p-3">
+                                            <div class="modal-body">
+                                                <i class="bi bi-exclamation-circle text-danger display-4 mb-2"></i>
+                                                <h5 class="font-heading">Supprimer le projet ?</h5>
+                                                <p class="small text-muted mb-3">« {{ project.title }} » sera supprimé.</p>
+                                                <form method="POST" action="{% url 'dashboard:project_delete' project.pk %}">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-danger">Confirmer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="6" class="text-center py-4 text-muted">Aucun projet enregistré.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

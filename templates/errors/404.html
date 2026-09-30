@@ -1,0 +1,18 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Page non trouvée (404) - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 my-5 text-center">
+    <div class="container py-5">
+        <div class="display-1 fw-bold text-success font-heading mb-3">404</div>
+        <h2 class="h3 font-heading mb-3">Oups ! Cette page est introuvable</h2>
+        <p class="text-muted mx-auto mb-4" style="max-width: 500px;">
+            La page que vous recherchez a peut-être été déplacée ou n'existe plus. Pas de panique, retournez sur nos actions citoyennes !
+        </p>
+        <a href="{% url 'core:home' %}" class="btn btn-pv-primary px-4 py-2">
+            <i class="bi bi-house-door-fill me-1"></i> Retour à l'accueil
+        </a>
+    </div>
+</section>
+{% endblock %}

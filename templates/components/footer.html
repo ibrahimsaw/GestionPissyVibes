@@ -1,0 +1,73 @@
+﻿<footer class="footer-pissy">
+    <div class="container">
+        <div class="row g-4 justify-content-between">
+            <div class="col-lg-4 col-md-6">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="d-inline-flex align-items-center justify-content-center bg-success text-white rounded-3 p-2" style="width: 36px; height: 36px;">
+                        <i class="bi bi-recycle fs-5"></i>
+                    </span>
+                    <h4 class="h5 mb-0 text-white font-heading">{{ site_settings.site_name|default:"Pissy Vibes" }}</h4>
+                </div>
+                <p class="text-white-50 small mb-3">
+                    « {{ site_settings.tagline|default:"Ensemble, on bouge, on nettoie et on fête." }} »
+                </p>
+                <p class="small mb-4 text-light">
+                    {{ site_settings.about_summary|default:"Association de jeunesse engagée dans l'assainissement, l'environnement, la culture et la citoyenneté au Burkina Faso."|truncatewords:25 }}
+                </p>
+                {% include 'components/social_links.html' %}
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-6">
+                <h5>Navigation</h5>
+                <ul class="list-unstyled d-flex flex-column gap-2 small">
+                    <li><a href="{% url 'core:home' %}"><i class="bi bi-chevron-right small me-1"></i> Accueil</a></li>
+                    <li><a href="{% url 'core:about' %}"><i class="bi bi-chevron-right small me-1"></i> À propos</a></li>
+                    <li><a href="{% url 'activities:action_list' %}"><i class="bi bi-chevron-right small me-1"></i> Nos Actions</a></li>
+                    <li><a href="{% url 'projects:project_list' %}"><i class="bi bi-chevron-right small me-1"></i> Nos Projets</a></li>
+                    <li><a href="{% url 'events:event_list' %}"><i class="bi bi-chevron-right small me-1"></i> Événements</a></li>
+                    <li><a href="{% url 'gallery:gallery_list' %}"><i class="bi bi-chevron-right small me-1"></i> Galerie</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-6">
+                <h5>Participer & Gestion</h5>
+                <ul class="list-unstyled d-flex flex-column gap-2 small">
+                    <li><a href="{% url 'volunteers:join_view' %}"><i class="bi bi-chevron-right small me-1"></i> Devenir bénévole</a></li>
+                    <li><a href="{% url 'news:article_list' %}"><i class="bi bi-chevron-right small me-1"></i> Blog & Actualités</a></li>
+                    <li><a href="{% url 'contact:contact_view' %}"><i class="bi bi-chevron-right small me-1"></i> Nous contacter</a></li>
+                    <li><a href="{% url 'core:about' %}#partenaires"><i class="bi bi-chevron-right small me-1"></i> Devenir partenaire</a></li>
+                    <li><a href="{% url 'dashboard:index' %}" class="text-warning fw-bold"><i class="bi bi-shield-lock small me-1"></i> Espace Gestion</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5>Coordonnées</h5>
+                <ul class="list-unstyled d-flex flex-column gap-2 small text-light">
+                    <li class="d-flex align-items-start gap-2">
+                        <i class="bi bi-geo-alt text-warning mt-1"></i>
+                        <span>{{ site_settings.address|default:"Pissy, Ouagadougou, Burkina Faso" }}</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <i class="bi bi-telephone text-warning"></i>
+                        <span>{{ site_settings.phone|default:"+226 70 00 00 00" }}</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <i class="bi bi-whatsapp text-success"></i>
+                        <span>WhatsApp : {{ site_settings.whatsapp|default:"+226 70 00 00 00" }}</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <i class="bi bi-envelope text-warning"></i>
+                        <span>{{ site_settings.email|default:"contact@pissyvibes.org" }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom text-center text-white-50">
+            <p class="mb-0">
+                &copy; {% now "Y" %} <strong>{{ site_settings.site_name|default:"Pissy Vibes" }}</strong>. Tous droits réservés.
+                Fait avec engagement et passion au Burkina Faso.
+            </p>
+        </div>
+    </div>
+</footer>

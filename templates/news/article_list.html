@@ -1,0 +1,56 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Actualités & Média - Pissy Vibes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container py-lg-2">
+        <span class="badge bg-warning text-dark text-uppercase px-3 py-2 mb-2">Média & Vie Citoyenne</span>
+        <h1 class="display-5 font-heading fw-bold mb-2">Actualités & Blog</h1>
+        <p class="lead text-white-50 mx-auto mb-0" style="max-width: 650px;">
+            Articles, reportages, réflexions écologiques et récits de terrain par l'équipe Pissy Vibes.
+        </p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Recherche et Catégories -->
+        <div class="card border-0 shadow-sm rounded-4 p-3 mb-5 bg-white">
+            <form method="GET" class="row g-3 align-items-center">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" name="q" value="{{ search_query }}" class="form-control bg-light border-0" placeholder="Rechercher un article...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select name="category" class="form-select bg-light border-0">
+                        <option value="">Toutes les catégories</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-1 d-grid">
+                    <button type="submit" class="btn btn-pv-primary">Filtrer</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="row g-4">
+            {% for article in articles %}
+                <div class="col-md-6 col-lg-4">
+                    {% include 'components/article_card.html' with article=article %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <p>Aucun article trouvé.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% include 'components/pagination.html' with page_obj=articles %}
+    </div>
+</section>
+{% endblock %}
