@@ -38,22 +38,22 @@ class Command(BaseCommand):
         # 2. SiteSettings
         settings_obj = SiteSettings.load()
         settings_obj.site_name = "Pissy Vibes"
-        settings_obj.tagline = "L'Énergie Positive au Service de l'Assainissement et du Développement Communautaire"
+        settings_obj.tagline = "L'Énergie Positive au Service de l'Assainissement, de la Culture et du Sport"
         settings_obj.vision = "Impulser le Développement Communautaire et Social au sein de l'arrondissement N°06 de Ouagadougou, en mobilisant les citoyens pour améliorer collectivement le cadre de vie, la salubrité et l'épanouissement de la jeunesse."
-        settings_obj.about_summary = "Pissy Vibes est une association laïque, apolitique et à but non lucratif régie par la loi n° 011-2025/ALT du 17 juillet 2025 au Burkina Faso. Née à Pissy, son domaine principal est l'Assainissement, alliant salubrité, actions humanitaires, sport et festivals communautaires."
-        settings_obj.about_full_history = "Créée conformément à la loi n° 011-2025/ALT et adoptée en Assemblée Générale constitutive le 04 octobre 2025, l'Association PISSY VIBES tire son nom du quartier de Pissy à Ouagadougou et du mot 'Vibes' (vibration, énergie positive). L'association structure l'engagement citoyen autour de son domaine phare : l'Assainissement (campagnes de salubrité, gestion des déchets, curage des caniveaux, hygiène publique), appuyé par l'Environnement, l'Humanitaire, le Sport & la Cohésion, ainsi que l'Organisation de Festivals citoyens."
-        settings_obj.mission = "Mobiliser les citoyens et la jeunesse de l'arrondissement N°06 de Ouagadougou pour transformer le cadre de vie par des actions d'assainissement concret, la solidarité humanitaire, la pratique sportive et des festivals éco-citoyens."
-        settings_obj.email = "pissyvibes@gmail.com"
+        settings_obj.about_summary = "Pissy Vibes est une association laïque, apolitique et à but non lucratif régie par la loi n° 011-2025/ALT du 17 juillet 2025 au Burkina Faso. Née à Pissy, elle allie l'ambiance et la vibration positive (Vibes) à l'engagement civique concret."
+        settings_obj.about_full_history = "Créée conformément à la loi n° 011-2025/ALT et adoptée en Assemblée Générale constitutive le 04 octobre 2025, l'Association PISSY VIBES tire son nom du quartier de Pissy à Ouagadougou et du mot 'Vibes' (vibration, ambiance positive). L'association structure l'engagement citoyen autour d'une thématique principale : l'Assainissement (campagnes de salubrité, gestion des déchets, hygiène publique), et de deux thématiques secondaires : le Sport et la Jeunesse (tournois, dépassement de soi) ainsi que la Culture et l'Épanouissement (patrimoine, événements artistiques)."
+        settings_obj.mission = "Mobiliser les citoyens de l'arrondissement N°06 de Ouagadougou pour transformer le cadre de vie par des actions de salubrité publique, encourager la pratique sportive et valoriser les expressions artistiques et culturelles locales."
+        settings_obj.email = "contact@pissyvibes.org"
         settings_obj.phone = "+226 70 12 34 56"
         settings_obj.whatsapp = "+226 70 12 34 56"
         settings_obj.address = "Pissy, Secteur 26, Arrondissement N°06, Province du Kadiogo, Ouagadougou, Burkina Faso"
         settings_obj.opening_hours = "Du Lundi au Samedi : 08h00 - 18h00"
-        settings_obj.facebook_url = "https://facebook.com/pissyvibes"
-        settings_obj.tiktok_url = "https://tiktok.com/@pissyvibes"
-        settings_obj.instagram_url = ""
-        settings_obj.youtube_url = ""
-        settings_obj.twitter_url = ""
-        settings_obj.linkedin_url = ""
+        settings_obj.facebook_url = "https://facebook.com"
+        settings_obj.instagram_url = "https://instagram.com"
+        settings_obj.tiktok_url = "https://tiktok.com"
+        settings_obj.youtube_url = "https://youtube.com"
+        settings_obj.twitter_url = "https://x.com"
+        settings_obj.linkedin_url = "https://linkedin.com"
         settings_obj.stat_actions_count = 52
         settings_obj.stat_volunteers_count = 480
         settings_obj.stat_trees_planted = 1850
@@ -61,13 +61,14 @@ class Command(BaseCommand):
         settings_obj.stat_events_count = 34
         settings_obj.save()
 
-        # 3. Domaines d'action (5 Domaines Clés Officiels)
+        # 3. Domaines d'action (Alignés sur les Statuts Officiels)
         domains_data = [
-            ("Assainissement (Domaine Principal)", "assainissement", "bi-trash-fill", "Nettoyage intensif des rues et caniveaux, ramassage et gestion des déchets, promotion de l'hygiène et de la salubrité publique.", 1),
-            ("Environnement", "environnement", "bi-tree-fill", "Reboisement urbain, plantation d'arbres, aménagement d'espaces verts et préservation du cadre de vie.", 2),
-            ("Humanitaire", "humanitaire", "bi-heart-fill", "Actions de solidarité communautaire, soutien aux personnes vulnérables, secours et entraide citoyenne.", 3),
-            ("Sport & Cohésion", "sport-cohesion", "bi-trophy-fill", "Pratique sportive, tournois de maracana, rassemblement des jeunes et promotion des valeurs de dépassement de soi et de fair-play.", 4),
-            ("Organisation de Festivals", "festivals-evenements", "bi-stars", "Festivals éco-citoyens, rassemblements festifs populaires, mobilisation culturelle et célébration des victoires collectives.", 5),
+            ("Assainissement (Thématique Principale)", "assainissement", "bi-trash-fill", "Campagnes de sensibilisation, nettoyage des rues et caniveaux, gestion des déchets et hygiène publique.", 1),
+            ("Sport & Jeunesse", "sport-jeunesse", "bi-trophy-fill", "Pratique sportive, tournois de maracana, détection et soutien des jeunes talents, fair-play.", 2),
+            ("Culture & Épanouissement", "culture-epanouissement", "bi-palette-fill", "Valorisation du patrimoine culturel, activités artistiques, concerts et événements d'expression créative.", 3),
+            ("Environnement & Cadre de Vie", "environnement", "bi-tree-fill", "Reboisement urbain, plantation d'arbres et aménagement d'espaces verts communautaires.", 4),
+            ("Engagement Citoyen", "engagement-citoyen", "bi-people-fill", "Mobilisation communautaire et participation active des résidents de l'Arrondissement N°06.", 5),
+            ("Événements Communautaires", "evenements-communautaires", "bi-calendar-event-fill", "Rencontres inter-quartiers, journées citoyennes et festivités éco-responsables.", 6),
         ]
         for name, slug, icon, desc, order in domains_data:
             DomainOfAction.objects.update_or_create(
@@ -285,13 +286,12 @@ class Command(BaseCommand):
                 defaults={'role': role, 'content': text, 'rating': rating, 'display_order': ord_num, 'is_active': True}
             )
 
-        # 11. Partenaires Officiels
-        Partner.objects.all().delete()
+        # 11. Partenaires
         partners_data = [
-            ("Brigade Laabal", "Partenaire stratégique pour les opérations de salubrité et d'assainissement urbain", 1),
-            ("Mairie de l'Arrondissement N°06", "Partenaire institutionnel local et gouvernance territoriale", 2),
-            ("Le Secrétariat Permanent pour l'Élimination du Paludisme", "Appui aux actions de prévention, assainissement et lutte antivectorielle", 3),
-            ("Ministère de la Santé", "Accompagnement institutionnel et promotion de la santé publique communautaire", 4),
+            ("Mairie de l'Arrondissement 3", "Partenaire institutionnel local", 1),
+            ("Ministère de l'Environnement (Burkina Faso)", "Soutien aux campagnes de reboisement", 2),
+            ("Jeunesse & Avenir BF", "Coalition des mouvements associatifs", 3),
+            ("EcoBurkina Solutions", "Partenaire recyclage et valorisation des déchets", 4),
         ]
         for name, desc, ord_num in partners_data:
             Partner.objects.update_or_create(
@@ -300,4 +300,3 @@ class Command(BaseCommand):
             )
 
         self.stdout.write(self.style.SUCCESS("[OK] Donnees de demonstration 'seed_demo' initialisees avec succes !"))
-
