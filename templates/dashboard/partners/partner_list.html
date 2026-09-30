@@ -1,0 +1,93 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Gestion des Partenaires{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+    <div>
+        <h1 class="h3 font-heading mb-1 text-dark">Partenaires Officiels</h1>
+        <p class="text-muted small mb-0">Gérez les partenaires et institutions soutenant Pissy Vibes</p>
+    </div>
+    <a href="{% url 'dashboard:partner_create' %}" class="btn btn-pv-primary">
+        <i class="bi bi-plus-lg"></i> Ajouter un partenaire
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 70px;">Logo</th>
+                    <th>Nom du Partenaire</th>
+                    <th>Description / Rôle</th>
+                    <th>Site Web</th>
+                    <th>Ordre</th>
+                    <th>Statut</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for partner in partners %}
+                    <tr>
+                        <td>
+                            {% if partner.logo %}
+                                <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="rounded border p-1" style="width: 50px; height: 40px; object-fit: contain;">
+                            {% else %}
+                                <div class="bg-light rounded border text-muted d-flex align-items-center justify-content-center small" style="width: 50px; height: 40px;">
+                                    <i class="bi bi-building"></i>
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="fw-bold text-dark">{{ partner.name }}</div>
+                        </td>
+                        <td>
+                            <small class="text-muted">{{ partner.description|default:"-"|truncatewords:10 }}</small>
+                        </td>
+                        <td>
+                            {% if partner.website %}
+                                <a href="{{ partner.website }}" target="_blank" class="small text-primary text-decoration-none">
+                                    <i class="bi bi-link-45deg"></i> Lien
+                                </a>
+                            {% else %}
+                                <span class="text-muted small">-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border">{{ partner.display_order }}</span>
+                        </td>
+                        <td>
+                            {% if partner.is_active %}
+                                <span class="badge bg-success-subtle text-success border border-success-subtle">Actif</span>
+                            {% else %}
+                                <span class="badge bg-secondary-subtle text-secondary border">Inactif</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <div class="d-flex align-items-center justify-content-end gap-1">
+                                <a href="{% url 'dashboard:partner_edit' partner.pk %}" class="btn btn-sm btn-light" title="Modifier">
+                                    <i class="bi bi-pencil-square text-primary"></i>
+                                </a>
+                                <form method="post" action="{% url 'dashboard:partner_delete' partner.pk %}" onsubmit="return confirm('Supprimer ce partenaire ?');" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-light text-danger" title="Supprimer">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="bi bi-building fs-1 d-block mb-2 text-secondary opacity-50"></i>
+                            <p class="mb-0">Aucun partenaire enregistré pour le moment.</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

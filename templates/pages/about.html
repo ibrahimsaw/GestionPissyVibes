@@ -121,21 +121,31 @@
     </div>
 </section>
 
-<!-- Partenaires -->
+<!-- Partenaires Officiels -->
 {% if partners %}
-<section class="py-5 bg-light" id="partenaires">
-    <div class="container text-center py-lg-3">
-        <span class="section-subtitle">Ensemble pour l'impact</span>
-        <h3 class="section-title">Nos Partenaires</h3>
-        <div class="row g-4 justify-content-center mt-3">
+<section class="py-5 bg-light border-top" id="partenaires">
+    <div class="container py-lg-4 text-center">
+        <span class="section-subtitle">Soutiens & Collaborations</span>
+        <h3 class="section-title mb-4">Nos Partenaires Officiels</h3>
+        <p class="text-muted mx-auto mb-5" style="max-width: 650px;">
+            Pissy Vibes collabore étroitement avec les institutions publiques, sanitaires et citoyennes pour maximiser l'impact de ses actions sur le terrain.
+        </p>
+
+        <div class="row g-4 justify-content-center">
             {% for partner in partners %}
-                <div class="col-6 col-md-3 col-lg-2">
-                    <div class="bg-white p-3 rounded-3 shadow-sm h-100 d-flex align-items-center justify-content-center">
-                        {% if partner.logo %}
-                            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid" style="max-height: 45px; object-fit: contain;">
-                        {% else %}
-                            <span class="fw-bold small">{{ partner.name }}</span>
-                        {% endif %}
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white text-center">
+                        <div class="d-flex align-items-center justify-content-center mb-3" style="height: 70px;">
+                            {% if partner.logo %}
+                                <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid" style="max-height: 60px; max-width: 140px; object-fit: contain;">
+                            {% else %}
+                                <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center" style="width: 55px; height: 55px;">
+                                    <i class="bi bi-building fs-4"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <h5 class="font-heading mb-2 fw-bold text-dark">{{ partner.name }}</h5>
+                        <p class="text-muted small mb-0">{{ partner.description|default:"Partenaire engagé à nos côtés" }}</p>
                     </div>
                 </div>
             {% endfor %}

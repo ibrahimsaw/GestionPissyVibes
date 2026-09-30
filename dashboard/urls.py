@@ -1,4 +1,4 @@
-﻿from django.urls import path
+from django.urls import path
 from . import views
 
 app_name = 'dashboard'
@@ -55,4 +55,10 @@ urlpatterns = [
 
     # Settings
     path('parametres/', views.settings_edit_view, name='settings_edit'),
+
+    # Partners
+    path('partenaires/', views.partner_list_view, name='partner_list'),
+    path('partenaires/ajouter/', views.partner_create_view, name='partner_create'),
+    path('partenaires/<int:pk>/modifier/', views.partner_edit_view, name='partner_edit'),
+    path('partenaires/<int:pk>/supprimer/', views.partner_delete_view, name='partner_delete'),
 ]

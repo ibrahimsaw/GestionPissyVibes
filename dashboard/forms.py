@@ -142,3 +142,20 @@ class SiteSettingsForm(forms.ModelForm):
             'stat_neighborhoods_count': forms.NumberInput(attrs={'class': 'form-control'}),
             'stat_events_count': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+
+class PartnerForm(forms.ModelForm):
+    class Meta:
+        from partners.models import Partner
+        model = Partner
+        fields = ['name', 'logo', 'description', 'website', 'display_order', 'is_active']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ex: Mairie de l'Arrondissement N°06"}),
+            'logo': forms.FileInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': "Rôle ou description du partenariat"}),
+            'website': forms.URLInput(attrs={'class': 'form-control', 'placeholder': "https://..."}),
+            'display_order': forms.NumberInput(attrs={'class': 'form-control'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+

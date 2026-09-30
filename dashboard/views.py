@@ -353,3 +353,45 @@ def settings_edit_view(request):
         messages.success(request, "Les paramètres et informations du site ont été mis à jour !")
         return redirect('dashboard:settings_edit')
     return render(request, 'dashboard/settings/settings_form.html', {'form': form, 'active_menu': 'settings'})
+
+# --------------------------------------------------------------------------
+# PARTENAIRES
+# --------------------------------------------------------------------------
+@staff_required
+def partner_list_view(request):
+    from partners.models import Partner
+    partners = Partner.objects.all().order_by('display_order', 'name')
+    return render(request, 'dashboard/partners/partner_list.html', {'partners': partners, 'active_menu': 'partners'})
+
+@staff_required
+def partner_create_view(request):
+    from .forms import PartnerForm
+    form = PartnerForm(request.POST or None, request.FILES or None)
+    if request.method == 'POST' and form.is_valid():
+        partner = form.save()
+        messages.success(request, f"Partenaire « {partner.name} » ajouté avec succès !")
+        return redirect('dashboard:partner_list')
+    return render(request, 'dashboard/partners/partner_form.html', {'form': form, 'title': "Ajouter un Partenaire", 'active_menu': 'partners'})
+
+@staff_required
+def partner_edit_view(request, pk):
+    from partners.models import Partner
+    from .forms import PartnerForm
+    partner = get_object_or_404(Partner, pk=pk)
+    form = PartnerForm(request.POST or None, request.FILES or None, instance=partner)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, f"Partenaire « {partner.name} » mis à jour avec succès !")
+        return redirect('dashboard:partner_list')
+    return render(request, 'dashboard/partners/partner_form.html', {'form': form, 'partner': partner, 'title': f"Modifier {partner.name}", 'active_menu': 'partners'})
+
+@staff_required
+def partner_delete_view(request, pk):
+    from partners.models import Partner
+    partner = get_object_or_404(Partner, pk=pk)
+    if request.method == 'POST':
+        name = partner.name
+        partner.delete()
+        messages.success(request, f"Partenaire « {name} » supprimé.")
+    return redirect('dashboard:partner_list')
+

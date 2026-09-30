@@ -99,27 +99,18 @@
             z-index: 900;
         }
         .content-area {
-            padding: 1.25rem 1rem;
+            padding: 2rem 1.75rem;
             flex: 1;
-        }
-        @media (min-width: 768px) {
-            .content-area {
-                padding: 2rem 1.75rem;
-            }
         }
         @media (max-width: 991.98px) {
             .sidebar {
                 transform: translateX(-100%);
-                box-shadow: 0 0 20px rgba(0,0,0,0.3);
             }
             .sidebar.show {
                 transform: translateX(0);
             }
             .main-wrapper {
                 margin-left: 0;
-            }
-            .topbar {
-                padding: 0.65rem 1rem;
             }
         }
     </style>
@@ -180,6 +171,11 @@
             <li>
                 <a href="{% url 'dashboard:message_list' %}" class="sidebar-link {% if active_menu == 'messages' %}active{% endif %}">
                     <i class="bi bi-chat-left-text"></i> Messages Reçus
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'dashboard:partner_list' %}" class="sidebar-link {% if active_menu == 'partners' %}active{% endif %}">
+                    <i class="bi bi-building"></i> Partenaires
                 </a>
             </li>
             <li>
