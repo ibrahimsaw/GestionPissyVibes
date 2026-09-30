@@ -68,7 +68,6 @@ class Command(BaseCommand):
             ("Culture & Épanouissement", "culture-epanouissement", "bi-palette-fill", "Valorisation du patrimoine culturel, activités artistiques, concerts et événements d'expression créative.", 3),
             ("Environnement & Cadre de Vie", "environnement", "bi-tree-fill", "Reboisement urbain, plantation d'arbres et aménagement d'espaces verts communautaires.", 4),
             ("Engagement Citoyen", "engagement-citoyen", "bi-people-fill", "Mobilisation communautaire et participation active des résidents de l'Arrondissement N°06.", 5),
-            ("Événements Communautaires", "evenements-communautaires", "bi-calendar-event-fill", "Rencontres inter-quartiers, journées citoyennes et festivités éco-responsables.", 6),
         ]
         for name, slug, icon, desc, order in domains_data:
             DomainOfAction.objects.update_or_create(

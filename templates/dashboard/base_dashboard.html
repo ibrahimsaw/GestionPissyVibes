@@ -121,12 +121,9 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <a href="{% url 'dashboard:index' %}" class="sidebar-brand">
-            {% load static %}
-            {% if site_settings and site_settings.logo %}
-                <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" height="32" class="rounded bg-white p-1">
-            {% else %}
-                <img src="{% static 'images/logo.png' %}" alt="{{ site_settings.site_name|default:'Pissy Vibes' }}" height="32" class="rounded bg-white p-1">
-            {% endif %}
+            <span class="bg-success text-white p-2 rounded-3 d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                <i class="bi bi-gear-fill"></i>
+            </span>
             <span>Espace Gestion</span>
         </a>
 
