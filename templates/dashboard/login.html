@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -33,9 +33,12 @@
 </head>
 <body>
     <div class="login-card text-center">
-        <div class="d-inline-flex align-items-center justify-content-center bg-success text-white rounded-circle p-3 mb-3 shadow-sm" style="width: 64px; height: 64px;">
-            <i class="bi bi-shield-lock-fill fs-2"></i>
-        </div>
+        {% load static %}
+        {% if site_settings and site_settings.logo %}
+            <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" height="64" class="mb-3 rounded-3 shadow-xs">
+        {% else %}
+            <img src="{% static 'images/logo.png' %}" alt="{{ site_settings.site_name|default:'Pissy Vibes' }}" height="64" class="mb-3 rounded-3 shadow-xs">
+        {% endif %}
         
         <h2 class="font-heading h4 fw-bold text-dark mb-1">Espace Gestion</h2>
         <p class="text-muted small mb-4">Portail réservé aux gestionnaires de {{ site_settings.site_name|default:"Pissy Vibes" }}</p>

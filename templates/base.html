@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -19,6 +19,9 @@
     <meta property="og:site_name" content="{{ site_settings.site_name|default:'Pissy Vibes' }}">
     {% if site_settings.hero_image %}
         <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ site_settings.hero_image.url }}">
+    {% else %}
+        {% load static %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}">
     {% endif %}
 
     <!-- Twitter Card -->
@@ -29,6 +32,9 @@
     <!-- Favicon -->
     {% if site_settings.favicon %}
         <link rel="icon" type="image/png" href="{{ site_settings.favicon.url }}">
+    {% else %}
+        {% load static %}
+        <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
     {% endif %}
 
     <!-- Fonts -->

@@ -1,12 +1,10 @@
-﻿<nav class="navbar navbar-expand-lg navbar-pissy sticky-top">
+<nav class="navbar navbar-expand-lg navbar-pissy sticky-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'core:home' %}">
             {% if site_settings and site_settings.logo %}
-                <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" height="42">
+                <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" height="42" class="rounded-2">
             {% else %}
-                <span class="d-inline-flex align-items-center justify-content-center bg-success text-white rounded-3 p-2" style="width: 38px; height: 38px;">
-                    <i class="bi bi-recycle fs-5"></i>
-                </span>
+                <img src="{% static 'images/logo.png' %}" alt="{{ site_settings.site_name|default:'Pissy Vibes' }}" height="42" class="rounded-2">
             {% endif %}
             <span class="navbar-brand-text">{{ site_settings.site_name|default:"Pissy Vibes" }}</span>
         </a>
